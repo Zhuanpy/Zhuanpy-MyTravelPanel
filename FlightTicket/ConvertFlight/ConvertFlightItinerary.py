@@ -1,6 +1,7 @@
 import tkinter as tk
 from datetime import datetime
 import pandas as pd
+# import os
 
 
 def convert_date_format(original_date: str):
@@ -38,9 +39,8 @@ def convert_date_format(original_date: str):
 
 
 def transfer2airport(SIN: str):
-    path_ = 'E:\Python\Project\Stock\Project_01\code\Dl_Strategy\Stock_RNN\code\MyTravelPanel\FlightTicket\ConvertFlight'
-    df = pd.read_csv(f'{path_}/airport_data.csv')
-
+    _path = "E:\Python\Project\MyTravelPanel\FlightTicket\ConvertFlight"
+    df = pd.read_csv(f'{_path}/airport_data.csv')
     df = df[df['机场三字码'] == SIN]
     if df.shape:
         city = df['城市名'].values[0]
@@ -55,7 +55,6 @@ def transfer2airport(SIN: str):
 
 
 def organize_text(texts):
-
     """
             # text：
             #  1. MU  568 S  05AUG SINPVG HK1  1635   2205  O*       E SA  1
@@ -109,7 +108,6 @@ def organize_text(texts):
 
 
 def translate_text(texts, language='CN'):
-
     lis = organize_text(texts)
 
     itn = ''
@@ -206,6 +204,8 @@ class FlightConvertApp:
 
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = FlightConvertApp(root)
-    root.mainloop()
+    # root = tk.Tk()
+    # app = FlightConvertApp(root)
+    # root.mainloop()
+    r = transfer2airport('SIN')
+    print(r)

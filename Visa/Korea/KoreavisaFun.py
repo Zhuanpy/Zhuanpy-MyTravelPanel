@@ -82,8 +82,6 @@ def combine_JPG2Pdf(folderPath: str, pdfFilePath: str):
 
 
 def create_korea_visa_folder(file_name: str):
-    print(file_name)
-    print(type(file_name))
     try:
         file_name = file_name.upper()
         folder_name = f'KOR_VISA_{file_name}'
