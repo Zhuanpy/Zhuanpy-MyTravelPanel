@@ -61,7 +61,6 @@ def combine_JPG2Pdf(folderPath: str, pdfFilePath: str):
                 if int(filename) > 5:
                     pngFiles.append(folderPath + file)
             except:
-
                 pngFiles.append(folderPath + file)
 
     pngFiles.sort()
@@ -82,6 +81,7 @@ def combine_JPG2Pdf(folderPath: str, pdfFilePath: str):
 
 
 def create_korea_visa_folder(file_name: str):
+
     try:
         file_name = file_name.upper()
         folder_name = f'KOR_VISA_{file_name}'
@@ -110,9 +110,8 @@ def create_korea_visa_folder(file_name: str):
 def fill_korea_visa_form(folder: str):
     folder = f'KOR_VISA_{folder}'
     file_path = f'{root_path}/{folder}'
-    # print(file_path)
-    for p in range(1, 6):
 
+    for p in range(1, 6):
         page = f'PAGE0{p}'
 
         """ 读取坐标信息 """

@@ -26,5 +26,4 @@ if __name__ == '__main__':
     code4 = 'ZHXY'
     airportname_cn = '信阳明港机场'
     airportname_en = 'Xinyang '
-
     append_airport_code_data(citycn, code3, code4, airportname_cn, airportname_en)

@@ -11,7 +11,6 @@ class MyVisa:
 
     @classmethod
     def fun01(cls):
-
         new_window = tk.Toplevel(root)
         new_window.title("PDF文件处理")
         new_window.geometry('300x100')
@@ -219,7 +218,9 @@ for i in range(3):
 
     for j in range(3):
         k1 = k + j
-        button = tk.Button(root, text=visa_buttons[k1][0], command=eval(visa_buttons[k1][1]))
+        button = tk.Button(root,
+                           text=visa_buttons[k1][0],
+                           command=eval(visa_buttons[k1][1]))
         button.grid(row=i, column=j, padx=10, pady=10)
 
 # 启动主循环
