@@ -203,7 +203,7 @@ class MyVisa:
     @classmethod
     def fun09(cls):
         new_window = tk.Toplevel(root)
-        new_window.title("申根签证文件处理")
+        new_window.title("申根签证文 件处理")
         new_window.geometry('300x100')
 
 
