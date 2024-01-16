@@ -1,3 +1,4 @@
+
 visa_buttons = {0: ['PDF处理', 'MyVisa.fun01'],
                 1: ['韩国签证', 'MyVisa.fun02'],
                 2: ['机票转换', 'MyVisa.fun03'],
