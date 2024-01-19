@@ -10,8 +10,8 @@ class MalaysiaVisa:
 
     def merge_pdf(self):
 
-        input_path = f'E:/WORKING/A-AIR_TICKET/{self.files}/'
-        output_path = f'E:/WORKING/A-AIR_TICKET/{self.files}/myic.pdf'
+        input_path = f'{self.files}'
+        output_path = os.path.join(self.files, 'myic.pdf')
 
         pdf_lst = [f for f in os.listdir(input_path) if f.endswith('.pdf')]
 
@@ -24,64 +24,34 @@ class MalaysiaVisa:
         file_merger.write(output_path)
 
     def combine2Pdf(self):
+        pdfFilePath = os.path.join(self.files, 'combinetomyic.pdf')
+        files = os.listdir(self.files)
 
-        folderPath = f'E:/WORKING/A-AIR_TICKET/{self.files}/'
-        pdfFilePath = f'E:/WORKING/A-AIR_TICKET/{self.files}/combinetomyic.pdf'
-
-        files = os.listdir(folderPath)
-        pngFiles = []
+        files_list = []
         sources = []
+
+        image_extensions = ['jpg', 'png', 'jpeg', 'webp']
+
         for file in files:
+            split_files = file.split('.')
+            extension = split_files[-1].lower()
 
-            if 'jpg' in file:
-
-                filename = file.split('.')[0]
-
+            if extension in image_extensions:
+                file_path_ = os.path.join(self.files, file)
                 try:
-                    if int(filename) > 5:
-                        pngFiles.append(folderPath + file)
-                except:
 
-                    pngFiles.append(folderPath + file)
+                    if int(split_files[0]) <= 5 and len(split_files[0]) == 1:
+                        continue
+                    files_list.append(file_path_)
 
-            if 'png' in file:
+                except ValueError:
+                    files_list.append(file_path_)
 
-                filename = file.split('.')[0]
+        files_list.sort()
+        output = Image.open(files_list[0])
+        files_list.pop(0)
 
-                try:
-                    if int(filename) > 5:
-                        pngFiles.append(folderPath + file)
-                except:
-
-                    pngFiles.append(folderPath + file)
-
-            if 'jpeg' in file:
-
-                filename = file.split('.')[0]
-
-                try:
-                    if int(filename) > 5:
-                        pngFiles.append(folderPath + file)
-                except:
-
-                    pngFiles.append(folderPath + file)
-
-            if 'webp' in file:
-
-                filename = file.split('.')[0]
-
-                try:
-                    if int(filename) > 5:
-                        pngFiles.append(folderPath + file)
-                except:
-
-                    pngFiles.append(folderPath + file)
-
-        pngFiles.sort()
-        output = Image.open(pngFiles[0])
-        pngFiles.pop(0)
-
-        for file in pngFiles:
+        for file in files_list:
 
             pngFile = Image.open(file)
 
@@ -92,22 +62,8 @@ class MalaysiaVisa:
 
         output.save(pdfFilePath, "pdf", save_all=True, append_images=sources)
 
-    # def pdf2jpg(self, input_path, output_path):
-    #
-    #     pdf_document = fitz.open(pdf_path)
-    #
-    #     # 逐页将PDF转换为JPG图像
-    #     for page_number in range(pdf_document.page_count):
-    #         page = pdf_document.load_page(page_number)
-    #         pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))  # 调整图像大小
-    #
-    #         image = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-    #         image_path = f"{output_folder}/page_{page_number + 1}.jpg"
-    #         image.save(image_path)
-    #         print(f"Page {page_number + 1} converted and saved as {image_path}")
-    #
-    #     # 关闭PDF文件
-    #     pdf_document.close()
 
-
-
+if __name__ == "__main__":
+    file_path = 'E:\WORKING\A-AIR_TICKET\HID159187_GAO YICHEN\Datebirth'
+    pdf = MalaysiaVisa(file_path)
+    pdf.combine2Pdf()

@@ -173,11 +173,11 @@ class CountMonth:
 
 
 if __name__ == '__main__':
-    # pre = '2023-09'
-    # count = CountHid()
-    # profit, _sum = count.find_no_inv_booking(pre)
-    # print(f'profit: {profit}, pre sum: {_sum}')
+    pre = '2023-10'
+    count = CountHid()
+    profit, _sum = count.find_no_inv_booking(pre)
+    print(f'profit: {profit}, pre sum: {_sum}')
 
-    count = CountMonth()
-    data = count.import_my_performance()
-    print(data)
+    # count = CountMonth()
+    # data = count.import_my_performance()
+    # print(data)
