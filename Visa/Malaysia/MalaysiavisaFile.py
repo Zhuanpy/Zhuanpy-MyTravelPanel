@@ -39,7 +39,6 @@ class MalaysiaVisa:
             if extension in image_extensions:
                 file_path_ = os.path.join(self.files, file)
                 try:
-
                     if int(split_files[0]) <= 5 and len(split_files[0]) == 1:
                         continue
                     files_list.append(file_path_)

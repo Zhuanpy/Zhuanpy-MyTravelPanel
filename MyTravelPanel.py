@@ -3,6 +3,7 @@ from ButtonsName import *
 from Visa.Malaysia.MalaysiavisaFile import *
 from Visa.Korea.KoreavisaFun import fill_korea_visa_form, create_korea_visa_folder
 from Visa.Janpan.japanvisa import japan_visa_copy_all_files
+from Visa.Australia.AustraliaVisa import australia_visa_copy_all_files
 from tkinter import messagebox
 from FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
 
@@ -197,8 +198,37 @@ class MyVisa:
     @classmethod
     def fun08(cls):
         new_window = tk.Toplevel(root)
-        new_window.title("申根签证文件处理")
+        new_window.title("澳洲签证文件处理")
         new_window.geometry('300x100')
+
+        label1 = tk.Label(new_window, text="文件路径:")
+        label1.grid(row=0, column=0, padx=2, pady=5, sticky='w')
+
+        entry1 = tk.Entry(new_window, width=20)
+        entry1.grid(row=0, column=1, columnspan=3, padx=2, pady=5)  # , sticky='w'
+
+        """创建澳洲签证  文件文件夹功能 """
+
+        label2 = tk.Label(new_window, text="创建文件：")
+        label2.grid(row=1, column=0, padx=2, pady=5, sticky='w')
+
+        def create_folder():
+            f = entry1.get()
+            f = f.upper()
+            australia_visa_copy_all_files(f)
+
+        button2 = tk.Button(new_window, text="确认创建", command=create_folder)
+        button2.grid(row=1, column=1)
+
+        """
+        
+        
+
+        
+
+
+        
+        """
 
     @classmethod
     def fun09(cls):

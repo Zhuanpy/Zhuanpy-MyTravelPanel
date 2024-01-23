@@ -6,6 +6,6 @@ visa_buttons = {0: ['PDF处理', 'MyVisa.fun01'],
                 4: ['美国签证', 'MyVisa.fun05'],
                 5: ['中国签证', 'MyVisa.fun06'],
                 6: ['台湾签证', 'MyVisa.fun07'],
-                7: ['台湾-签证', 'MyVisa.fun08'],
+                7: ['澳洲签证', 'MyVisa.fun08'],
                 8: ['pending', 'MyVisa.fun09']}
 
