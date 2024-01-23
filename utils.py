@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 
 def create_my_folder(file_type: str, hid: str, name: str, file_path=None):
@@ -6,7 +7,7 @@ def create_my_folder(file_type: str, hid: str, name: str, file_path=None):
     _path = "E:/WORKING/A-AIR_TICKET"
 
     if file_path:
-        _path = f'{_path}/{file_path}'
+        _path = os.path.join(_path, file_path)
 
     file_type = file_type.upper()
     name = name.upper()
