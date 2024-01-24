@@ -23,5 +23,10 @@ def copy_folder_contents(source_folder, destination_folder):
         source_path = os.path.join(source_folder, filename)
         copy_file_path = os.path.join(destination_folder, filename)
 
-        # 使用 shutil.copy2 复制文件
-        shutil.copy2(source_path, copy_file_path)
+        if os.path.isdir(source_path):
+            # 如果是文件夹，递归调用函数
+            copy_folder_contents(source_path, copy_file_path)
+
+        else:
+            # 如果是文件，使用shutil复制
+            shutil.copy2(source_path, copy_file_path)
