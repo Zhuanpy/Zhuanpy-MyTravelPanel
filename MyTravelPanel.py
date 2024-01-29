@@ -1,8 +1,9 @@
 import tkinter as tk
 from ButtonsName import *
-from Visa.Malaysia.MalaysiavisaFile import *
+from Visa.VisaPdfFile.pdffile import MyPdfFile
 from Visa.Korea.KoreavisaFun import fill_korea_visa_form, create_korea_visa_folder
 from Visa.Janpan.japanvisa import japan_visa_copy_all_files
+from Visa.Malaysia.MalaysiavisaFile import malaysia_visa_copy_all_files
 from Visa.Australia.AustraliaVisa import australia_visa_copy_all_files
 from tkinter import messagebox
 from FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
@@ -32,7 +33,7 @@ class MyVisa:
 
             # 使用PdfFileMerger合并PDF文件
             try:
-                merger = MalaysiaVisa(input_folder)
+                merger = MyPdfFile(input_folder)
                 merger.merge_pdf()
                 messagebox.showinfo("成功", "PDF文件合并完成！")
 
@@ -46,7 +47,7 @@ class MyVisa:
             input_folder = entry1.get()
 
             try:
-                merger = MalaysiaVisa(input_folder)
+                merger = MyPdfFile(input_folder)
                 merger.combine2Pdf()
                 messagebox.showinfo("成功", "图片合成PDF完成！")
 
@@ -102,9 +103,7 @@ class MyVisa:
     def fun03(cls):
 
         def convert_text():
-
             input_text = text_entry_a.get("1.0", "end-1c")
-
             selected_result = result_var.get()
 
             if selected_result == "中文行程":
@@ -233,8 +232,26 @@ class MyVisa:
     @classmethod
     def fun09(cls):
         new_window = tk.Toplevel(root)
-        new_window.title("申根签证文 件处理")
+        new_window.title("马来签证文件处理")
         new_window.geometry('300x100')
+
+        label1 = tk.Label(new_window, text="文件路径:")
+        label1.grid(row=0, column=0, padx=2, pady=5, sticky='w')
+
+        entry1 = tk.Entry(new_window, width=20)
+        entry1.grid(row=0, column=1, columnspan=3, padx=2, pady=5)  # , sticky='w'
+
+        """ 创建日本签证  文件文件夹功能 """
+        label2 = tk.Label(new_window, text="创建文件：")
+        label2.grid(row=1, column=0, padx=2, pady=5, sticky='w')
+
+        def create_folder():
+            f = entry1.get()
+            f = f.upper()
+            malaysia_visa_copy_all_files(f)
+
+        button2 = tk.Button(new_window, text="确认创建", command=create_folder)
+        button2.grid(row=1, column=1)
 
 
 # 创建主窗口
