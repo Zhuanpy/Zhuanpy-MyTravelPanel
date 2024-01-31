@@ -10,21 +10,21 @@ class MyPdfFile:
 
     def merge_pdf(self):
 
-        input_path = f'{self.files}'
-        output_path = os.path.join(self.files, 'myic.pdf')
+        output_path = os.path.join(self.files, 'MyPdf.pdf')
 
-        pdf_lst = [f for f in os.listdir(input_path) if f.endswith('.pdf')]
+        pdf_lst = [f for f in os.listdir(self.files) if f.endswith('.pdf')]
 
-        pdf_lst = [os.path.join(input_path, filename) for filename in pdf_lst]
+        pdf_lst = [os.path.join(self.files, filename) for filename in pdf_lst]
 
         file_merger = PdfMerger()
-        for pdf in pdf_lst:
-            file_merger.append(pdf)  # 合并pdf文件
+
+        for f in pdf_lst:
+            file_merger.append(f)  # 合并pdf文件
 
         file_merger.write(output_path)
 
     def combine2Pdf(self):
-        pdfFilePath = os.path.join(self.files, 'combinetomyic.pdf')
+        pdfFilePath = os.path.join(self.files, 'CombinePdf.pdf')
         files = os.listdir(self.files)
 
         files_list = []
@@ -63,6 +63,8 @@ class MyPdfFile:
 
 
 if __name__ == "__main__":
-    file_path = 'E:\WORKING\A-AIR_TICKET\HID159187_GAO YICHEN\Datebirth'
+
+    file_path = """ E:\WORKING\A-AIR_TICKET\HID159187_GAO YICHEN\Datebirth """
+
     pdf = MyPdfFile(file_path)
     pdf.combine2Pdf()

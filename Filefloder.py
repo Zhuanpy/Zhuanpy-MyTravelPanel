@@ -9,6 +9,7 @@ visa_requirements_floder = os.path.join(working_visa_floder, 'VisaDocumentRequir
 
 
 def copy_folder_contents(source_folder, destination_folder):
+
     """ 将某个文件夹 A下所有内容， 复制到另外一个文件夹 B 下
     :parameter
     :source_folder: 文件夹 A 路径
