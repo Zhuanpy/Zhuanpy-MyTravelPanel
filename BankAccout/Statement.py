@@ -45,15 +45,15 @@ class OriginalStatement:
         for line in f.readlines():
             line = line.replace('\n', '')
             keys.append(line)
+
+        keys = list(set(keys))  # 去重复元素
         return keys
 
     def key_words_data(self, data):
 
         use_by_myself = self.read_key_word("keyword_use_by_myself")  # ["PAYNOW-FAST", "MIXUE", "BUS/MRT"]
-        use_by_myself = list(set(use_by_myself))
 
         use_by_business = self.read_key_word("keyword_use_use_by_business")
-        use_by_business = list(set(use_by_business))
 
         keywords = use_by_myself + use_by_business
         keywords = list(set(keywords))
@@ -68,7 +68,7 @@ class OriginalStatement:
 
         data.loc[data['Keyword'].isin(use_by_myself), 'User'] = 'Me'
         data.loc[data['Keyword'].isin(use_by_business), 'User'] = 'COM'
-        # data = data[data["Keyword"].isnull()]
+
         return data
 
     def organized_statement_data(self):
