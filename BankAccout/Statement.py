@@ -156,8 +156,8 @@ class OriginalStatement:
                               (~statement["EO"].isnull())]
 
         """ 以前已经整理 statement """
-        company_statement_path = os.path.join(self.file_path, "最新账单", "Self", "最新个人账单.xls")
-        previous = pd.read_excel(company_statement_path, sheet_name="Sheet1", engine='openpyxl')
+        self_path = os.path.join(self.file_path, "最新账单", "个人账单", "最新个人账单.xls")
+        previous = pd.read_excel(self_path, sheet_name="Sheet1", engine='openpyxl')
         previous["T-Date"] = pd.to_datetime(previous["T-Date"]).dt.date
         previous["Credit date"] = pd.to_datetime(previous["Credit date"]).dt.date
 
@@ -169,7 +169,7 @@ class OriginalStatement:
         else:
             # 保存 Excel 文件之前设置选项
             latest_statement = pd.concat([previous, latest_statement])
-            latest_statement.to_excel(company_statement_path, index=False, engine='openpyxl')
+            latest_statement.to_excel(self_path, index=False, engine='openpyxl')
             print("最新个人账单已更新;")
 
         return latest_statement
@@ -177,7 +177,6 @@ class OriginalStatement:
     def statement_to_company(self):
         latest_path = os.path.join(self.file_path, "最新账单", "Company", "最新公司账单.xls")
         latest_statement = pd.read_excel(latest_path, sheet_name="Sheet1", engine='openpyxl')
-        # print(latest_statement.head())
 
         to_path = os.path.join(self.file_path, "最新账单", "Toboss", "ToCompany.xls")
         to_company_statement = pd.read_excel(to_path, sheet_name="Sheet1", engine='openpyxl')
