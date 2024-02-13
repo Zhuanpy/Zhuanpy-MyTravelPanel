@@ -8,7 +8,7 @@ class MyPdfFile:
     def __init__(self, folder: str):
         self.files = folder
 
-    def merge_pdf(self):
+    def merge_pdf2pdf(self):
 
         output_path = os.path.join(self.files, 'MyPdf.pdf')
 
@@ -23,7 +23,8 @@ class MyPdfFile:
 
         file_merger.write(output_path)
 
-    def combine2Pdf(self):
+    # Merge images into PDF
+    def merge_images2pdf(self):
         pdfFilePath = os.path.join(self.files, 'CombinePdf.pdf')
         files = os.listdir(self.files)
 
@@ -67,4 +68,4 @@ if __name__ == "__main__":
     file_path = """ E:\WORKING\A-AIR_TICKET\HID159187_GAO YICHEN\Datebirth """
 
     pdf = MyPdfFile(file_path)
-    pdf.combine2Pdf()
+    pdf.merge_images2pdf()

@@ -18,58 +18,24 @@ def combine_JPG2Pdf(folderPath: str, pdfFilePath: str):
     pngFiles = []
     sources = []
 
+    THRESHOLD_VALUE = 0  # 设定不转化的图片
     for file in files:
 
-        if 'jpg' in file:
-
-            filename = file.split('.')[0]
-
-            try:
-                if int(filename) > 5:
-                    pngFiles.append(folderPath + file)
-            except:
-
-                pngFiles.append(folderPath + file)
-
-        if 'png' in file:
-
-            filename = file.split('.')[0]
+        if any(ext in file.lower() for ext in ['jpg', 'png', 'jpeg', 'webp']):
+            filename = os.path.splitext(file)[0]
 
             try:
-                if int(filename) > 5:
-                    pngFiles.append(folderPath + file)
-            except:
-
-                pngFiles.append(folderPath + file)
-
-        if 'jpeg' in file:
-
-            filename = file.split('.')[0]
-
-            try:
-                if int(filename) > 5:
-                    pngFiles.append(folderPath + file)
-            except:
-
-                pngFiles.append(folderPath + file)
-
-        if 'webp' in file:
-
-            filename = file.split('.')[0]
-
-            try:
-                if int(filename) > 5:
-                    pngFiles.append(folderPath + file)
-            except:
-                pngFiles.append(folderPath + file)
+                if int(filename) > THRESHOLD_VALUE:
+                    pngFiles.append(os.path.join(folderPath, file))
+            except ValueError:
+                pngFiles.append(os.path.join(folderPath, file))
 
     pngFiles.sort()
     output = Image.open(pngFiles[0])
     pngFiles.pop(0)
 
     for file in pngFiles:
-        # print(file)
-        # exit()
+
         pngFile = Image.open(file)
 
         if pngFile.mode == "RGB":

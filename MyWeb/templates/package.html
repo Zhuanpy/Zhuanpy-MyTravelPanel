@@ -2,9 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基础HTML示例</title>
 </head>
 <body>
+
+    <h1>欢迎来到我的网页</h1>
+
+    <p>这是一个简单的HTML示例，包括一些基本功能。</p>
+
+    <h2>链接</h2>
+    <a href="https://www.example.com" target="_blank">点击这里访问示例网站</a>
+
+    <h2>图像</h2>
+    <img src="https://via.placeholder.com/150" alt="占位图">
+
+    <h2>表格</h2>
+    <table border="1">
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+        </tr>
+        <tr>
+            <td>张三</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <td>李四</td>
+            <td>30</td>
+        </tr>
+    </table>
+
+    <h2>表单</h2>
+    <form action="/submit" method="post">
+        <label for="name">姓名：</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">邮箱：</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <input type="submit" value="提交">
+    </form>
 
 </body>
 </html>

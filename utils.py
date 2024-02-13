@@ -1,19 +1,18 @@
 from pathlib import Path
 import os
+from Filefloder import CreateVisaProgram as Program
 
 
 def create_my_folder(file_type: str, hid: str, name: str, file_path=None):
 
-    _path = "E:/WORKING/A-AIR_TICKET"
-
     if file_path:
-        _path = os.path.join(_path, file_path)
+        _path = os.path.join(Program.working_folder, file_path)
 
     file_type = file_type.upper()
     name = name.upper()
     folder = f'{file_type}_VISA_HID{hid}_{name}'
 
-    path = Path(f'{_path}/{folder}')
+    path = Path(f'{Program.working_folder}/{folder}')
 
     path.mkdir(parents=True)
 

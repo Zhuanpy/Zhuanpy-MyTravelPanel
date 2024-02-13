@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片转PDF</title>
 </head>
-<body>
 
+<body>
+    <h1>图片转PDF</h1>
+    <form method="post" action="/file_processing" enctype="multipart/form-data">
+        <label for="folder_path"> 图片文件夹路径：</label>
+        <input type="text" id="folder_path" name="folder_path" required>
+        <br>
+        <input type="submit" value="生成PDF">
+    </form>
 </body>
 </html>

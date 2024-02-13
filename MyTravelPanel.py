@@ -34,21 +34,20 @@ class MyVisa:
             # 使用PdfFileMerger合并PDF文件
             try:
                 merger = MyPdfFile(input_folder)
-                merger.merge_pdf()
+                merger.merge_pdf2pdf()
                 messagebox.showinfo("成功", "PDF文件合并完成！")
 
             except Exception as e:
                 messagebox.showerror("错误", str(e))
 
         def jpg_convert_to_pdf():
-            # 添加图片转化为PDF功能的代码
-            # pass
+
             # 获取输入文件夹路径
             input_folder = entry1.get()
 
             try:
                 merger = MyPdfFile(input_folder)
-                merger.combine2Pdf()
+                merger.merge_images2pdf()
                 messagebox.showinfo("成功", "图片合成PDF完成！")
 
             except Exception as e:

@@ -1,28 +1,26 @@
-from pathlib import Path
-import pandas as pd
+from Filefloder import CreateVisaProgram as Program
+import os
 
 
 class TaiwanVisa:
 
-    def __init__(self, hid, name, path_="E:/WORKING/A-AIR_TICKET"):
-        self.hid = hid
-        self.name = name
-        self.path_ = path_
-        self.read_path = ''
+    @classmethod
+    def taiwan_visa_copy_all_files(cls, name: str):
+        """
+        :param name: 输入签证的 HID号 + 名字
+        :return:
+        """
+        # 项目资源文件夹
+        source_folder = os.path.join(Program.visa_requirements_folder, '01_Taiwan_Visa')
 
-    def create_folder(self):
-        # 创建嵌套文件夹
-        # CHN_VISA_HID155653_HO JIA AI VIVI
-        folder = f'TWD_VISA_HID{self.hid}_{self.name}'
-        path = Path(f'{self.path_}/{folder}')
-        path.mkdir(parents=True)
+        # 项目目标文件夹
+        name = f'Taiwan_Visa_{name}'
+        destination_folder = os.path.join(Program.working_folder, name)
+        Program.copy_folder_contents(source_folder, destination_folder)
 
-    def create_request_list(self):
-        df = pd.read_excel(self.read_path)
-        pass
+        return True
 
 
 if __name__ == '__main__':
-    tw = TaiwanVisa(123645, 'LILI')
-    tw.create_folder()
-    tw.create_request_list()
+    file_name = "HID123_zhang zhuan"
+    TaiwanVisa.taiwan_visa_copy_all_files(file_name)
