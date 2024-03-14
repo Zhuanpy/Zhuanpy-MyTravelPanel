@@ -21,9 +21,9 @@ def append_airport_code_data(city_cn: str, code3: str, code4: str, airport_name_
 
 if __name__ == '__main__':
 
-    citycn = '信阳'
-    code3 = 'XAI'
-    code4 = 'ZHXY'
+    city_cn_ = '信阳'
+    code31 = 'XAI'
+    code41 = 'ZHXY'
     airportname_cn = '信阳明港机场'
     airportname_en = 'Xinyang '
-    append_airport_code_data(citycn, code3, code4, airportname_cn, airportname_en)
+    append_airport_code_data(city_cn_, code31, code41, airportname_cn, airportname_en)

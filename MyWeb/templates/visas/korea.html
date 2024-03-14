@@ -8,25 +8,30 @@
 </head>
 
 <body>
+    <h1>韩国签证处理</h1>
 
-<h1>韩国签证处理</h1>
-
-<form method="post" >
-    <label for="input_folder"> 文件路径：</label>
-    <input type="text" id="input_folder" name="input_folder" placeholder="请输入文件路径">
-    <br>
-    <label for="input_folder"> 创建文件：</label>
-    <button type="submit" formaction="/visa_Korea_folder">创建文件</button>
-
-    <br>
-    <br>
-    <label for="input_form"> 文件路径：</label>
-    <input type="text" id="input_form" name="input_form" placeholder="请输入文件路径">
+    <form method="post" action="{{url_for('visa_routes.visa_Korea_processing')}}" >
+        <label for="path_create_project"> 项目名称：</label>
+        <input type="text" id="path_create_project" name="path_create_project" placeholder="如：HID123_LI JIAN">
+        <br>
+        <br>
+        <label for="path_create_project"> 创建项目： </label>
+        <button type="submit" name="submit_button" value="create_project">确认创建</button>
+    </form>
 
     <br>
-    <label for="input_form"> 生成表格：</label>
-    <button type="submit" formaction="/visa_korea_form">确认生成</button>
+    <br>
 
-</form>
+    <form method="post" action="{{url_for('visa_routes.visa_Korea_processing')}}" >
+        <label for="path_fill_form"> 文件路径：</label>
+        <input type="text" id="path_fill_form" name="path_fill_form" placeholder="如：HID123_LI JIAN">
+
+        <br>
+        <br>
+        <label for="path_fill_form"> 生成表格：</label>
+        <button type="submit" name="submit_button" value="fill_form">确认生成</button>
+    </form>
+
+
 </body>
 </html>

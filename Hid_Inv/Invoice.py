@@ -173,7 +173,7 @@ class CountMonth:
 
 
 if __name__ == '__main__':
-    pre = '2023-10'
+    pre = '2023-11'
     count = CountHid()
     profit, _sum = count.find_no_inv_booking(pre)
     print(f'profit: {profit}, pre sum: {_sum}')

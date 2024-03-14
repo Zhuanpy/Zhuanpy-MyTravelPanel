@@ -134,13 +134,12 @@ class OriginalStatement:
 
         if latest_statement.empty:
             print("无最新公司账单;")
+            return latest_statement
 
-        else:
-            # 保存 Excel 文件之前设置选项
-            latest_statement = pd.concat([previous, latest_statement])
-            latest_statement.to_excel(previous_path, index=False, engine='openpyxl')
-            print("最新公司账单已更新;")
-
+        # 保存 Excel 文件之前设置选项
+        latest_statement = pd.concat([previous, latest_statement])
+        latest_statement.to_excel(previous_path, index=False, engine='openpyxl')
+        print("最新公司账单已更新;")
         return latest_statement
 
     def latest_self_statement(self):
@@ -198,6 +197,7 @@ class OriginalStatement:
         return latest_statement
 
     def statement_to_boss(self):
+
         """存储一份给老板"""
         load_path = os.path.join(self.file_path, "最新账单", "Toboss", "ToCompany.xls")
         statement = pd.read_excel(load_path, sheet_name="Sheet1", engine='openpyxl')

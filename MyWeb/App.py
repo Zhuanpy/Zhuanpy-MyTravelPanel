@@ -30,7 +30,6 @@ def accommodation():
 
 @app.route('/file_processing', methods=['GET', 'POST'])
 def file_processing():
-
     if request.method == 'POST':
         # 获取输入的文件夹路径
         folder_path = request.form['folder_path']
@@ -45,6 +44,11 @@ def file_processing():
     # 如果是 GET 请求，返回包含输入框的表单页面
 
     return render_template('file_processing.html')
+
+
+@app.route('/my_test')
+def my_test():
+    return render_template("Test.html")
 
 
 # @app.route('/KoreaVisaProject')
