@@ -4,119 +4,77 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
+    <title>我的工作界面</title>
+
+    <style>
+        /* 包含标题和按钮的容器样式 */
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start; /* 左对齐标题 */
+            gap: 30px; /* 按钮之间的间距 */
+        }
+
+        /* 标题样式 */
+        h2 {
+            margin-right: 40px; /* 标题右侧的间距 */
+        }
+
+        /* 按钮样式 */
+        button {
+            margin-bottom: 20px; /* 按钮下方的间距 */
+
+        }
+    </style>
 </head>
+
 <body>
+    <div>
+        <h2>签证区域</h2>
+        <a href="{{url_for('visa_routes.visa_Korea_page')}}"><button> 韩国签证 </button></a>
+        <a href="{{url_for('visa_routes.visa_Japan')}}"><button> 日本签证 </button></a>
+        <a href= "{{url_for('visa_routes.visa_Us')}}" ><button> 美国签证 </button></a>
+        <a href= "{{url_for('visa_routes.visa_China')}}" ><button> 中国签证 </button></a>
+        <br>
+        <a href= "{{url_for('visa_routes.visa_Taiwan')}}"><button> 台湾签证 </button></a>
+        <a href= "{{url_for('visa_routes.visa_Australia')}}" ><button> 澳洲签证 </button></a>
+        <a href= "{{url_for('visa_routes.visa_Malaysia')}}" ><button> 马来签证 </button></a>
+        <a href= "{{url_for('visa_routes.visa_Uk')}}" ><button> 英国签证 </button></a> <br>
+    </div>
 
-<div>
-    <h2>签证区域</h2>
+    <div>
+        <h2>机票区域</h2>
+        <a href="{{url_for('flight_routes.itinerary_conversion')}}"><button>机票行程转化</button></a>
+        <a href="/flight"><button>酷航信息输入</button></a>
+        <a href="/flight"><button>按钮3</button></a>
+        <a href="/flight"><button>按钮4</button> </a>
+        <a href="/flight"><button>按钮5</button></a>
+        <a href="/flight"><button>按钮6</button></a>
 
-    <a href="{{url_for('visa_routes.visa_Korea_page')}}">
-        <button>韩国签证</button>
-    </a>
-    <a href="{{url_for('visa_routes.visa_Japan')}}">
-        <button>日本签证</button>
-    </a>
-    <a href="{{url_for('visa_routes.visa_Us')}}">
-        <button>美国签证</button>
-    </a>
-    <a href="/visa">
-        <button>中国签证</button> <br>
-    </a>
-    <a href="/visa">
-        <button>台湾签证</button>
-    </a>
+    </div>
 
-    <a href="/visa">
-        <button>澳洲签证</button>
-    </a>
+    <div>
+        <h2>配套区域</h2>
+        <a href="/accommodation"><button>按钮1</button></a>
+        <a href="/accommodation"><button>按钮2</button></a>
+        <a href="/accommodation"><button>按钮3</button></a>
+        <a href="/accommodation"><button>按钮4</button></a>
+        <a href="/accommodation"><button>按钮5</button></a>
+        <a href="/accommodation"><button>按钮6</button></a>
+    </div>
 
-    <a href="/visa">
-        <button>马来西亚签证</button>
-    </a>
+    <div>
+        <h2>文件处理区域</h2>
+        <a href="/file_processing"><button>图片合并PDF</button></a>
+        <a href="/file_processing"><button>多个PDF合并</button></a>
 
-    <a href="/visa">
-    <button>申根签证</button>
-    </a>
+    </div>
 
-</div>
+    <div>
+        <h2> 测试区域</h2>
+        <a href="/my_test"><button>Test</button></a>
 
-<div>
-    <h2>机票区域</h2>
-    <a href="/flight">
-        <button>按钮1</button>
-    </a>
-    <a href="/flight">
-        <button>按钮2</button>
-    </a>
-    <a href="/flight">
-        <button>按钮3</button>
-    </a>
-    <a href="/flight">
-        <button>按钮4</button>
-    </a>
-
-    <a href="/flight">
-        <button>按钮5</button>
-    </a>
-
-    <a href="/flight">
-        <button>按钮6</button>
-    </a>
-
-</div>
-
-<div>
-    <h2>配套区域</h2>
-    <a href="/accommodation">
-        <button>按钮1</button>
-    </a>
-    <a href="/accommodation">
-        <button>按钮2</button>
-    </a>
-    <a href="/accommodation">
-        <button>按钮3</button>
-    </a>
-    <a href="/accommodation">
-        <button>按钮4</button>
-    </a>
-    <a href="/accommodation">
-        <button>按钮5</button>
-    </a>
-    <a href="/accommodation">
-        <button>按钮6</button>
-    </a>
-</div>
-
-<div>
-    <h2>文件处理区域</h2>
-    <a href="/file_processing">
-        <button>图片转化成PDF</button>
-    </a>
-    <a href="/file_processing">
-        <button>多个PDF合并</button>
-    </a>
-    <a href="/file_processing">
-        <button>按钮3</button>
-    </a>
-    <a href="/file_processing">
-        <button>按钮4</button>
-    </a>
-    <a href="/file_processing">
-        <button>按钮5</button>
-    </a>
-    <a href="/file_processing">
-        <button>按钮6</button>
-    </a>
-</div>
-
-<div>
-    <h2> 测试区域</h2>
-    <a href="/my_test">
-        <button>Test</button>
-    </a>
-
-</div>
+    </div>
 
 </body>
 </html>

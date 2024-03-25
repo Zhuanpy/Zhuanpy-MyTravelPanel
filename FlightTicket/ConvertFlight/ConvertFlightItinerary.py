@@ -107,7 +107,7 @@ def organize_text(texts):
     return lis
 
 
-def translate_text(texts, language='CN'):
+def translate_text(texts, language='CN', luggage=None, price=None):
     lis = organize_text(texts)
 
     itn = ''
@@ -140,10 +140,10 @@ def translate_text(texts, language='CN'):
         itn = f'{itn}{itn1}'
 
     if language == 'EN':
-        itn = f'{itn}Fare: SGD \nLuggage: KG;'
+        itn = f'{itn}Fare: {price}; \nLuggage: {luggage};'
 
     else:
-        itn = f'{itn}票价: SGD \n行李: KG;'
+        itn = f'{itn}票价:  {price}; \n行李: {luggage};'
         # 票价: SGD1180 ，  行李20KG
     return itn
 

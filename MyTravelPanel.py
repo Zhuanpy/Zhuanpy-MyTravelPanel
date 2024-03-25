@@ -1,9 +1,9 @@
 import tkinter as tk
 from ButtonsName import *
 from Visa.VisaPdfFile.pdffile import MyPdfFile
-from Visa.Korea.KoreavisaFun import fill_korea_visa_form, create_korea_visa_folder
-from Visa.Janpan.japanvisa import japan_visa_copy_all_files
-from Visa.Malaysia.MalaysiavisaFile import malaysia_visa_copy_all_files
+from Visa.Korea.KoreavisaFun import KoreaVisa
+from Visa.Janpan.japanvisa import create_japan_visa_folder
+from Visa.Malaysia.MalaysiavisaFile import MalaysiaVisa
 from Visa.Australia.AustraliaVisa import australia_visa_copy_all_files
 from tkinter import messagebox
 from FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
@@ -80,7 +80,7 @@ class MyVisa:
         def create_folder():
             f = entry1.get()
             f = f.upper()
-            create_korea_visa_folder(f)
+            KoreaVisa.create_visa_folder(f)
 
         button2 = tk.Button(new_window, text="确认创建", command=create_folder)
         button2.grid(row=1, column=1)
@@ -93,7 +93,7 @@ class MyVisa:
         def fill_form():
             f = entry1.get()
             f = f.upper()
-            fill_korea_visa_form(f)
+            KoreaVisa.fill_form(f)
 
         button3 = tk.Button(new_window, text="确认生成", command=fill_form)
         button3.grid(row=2, column=1)
@@ -170,7 +170,7 @@ class MyVisa:
         def create_folder():
             f = entry1.get()
             f = f.upper()
-            japan_visa_copy_all_files(f)
+            create_japan_visa_folder(f)
 
         button2 = tk.Button(new_window, text="确认创建", command=create_folder)
         button2.grid(row=1, column=1)
@@ -247,7 +247,7 @@ class MyVisa:
         def create_folder():
             f = entry1.get()
             f = f.upper()
-            malaysia_visa_copy_all_files(f)
+            MalaysiaVisa.create_visa_folder(f)
 
         button2 = tk.Button(new_window, text="确认创建", command=create_folder)
         button2.grid(row=1, column=1)

@@ -2,10 +2,12 @@ from flask import Flask, render_template, request
 from Visa.VisaPdfFile.pdffile import MyPdfFile
 
 from routes_visa import bp as visa_routes
+from route_flight import fb as flight_routes
 
 app = Flask(__name__)
 
 app.register_blueprint(visa_routes)
+app.register_blueprint(flight_routes)
 
 
 @app.route('/')
@@ -49,12 +51,6 @@ def file_processing():
 @app.route('/my_test')
 def my_test():
     return render_template("Test.html")
-
-
-# @app.route('/KoreaVisaProject')
-# def create_korea_visa_project(file_name):
-#     create_korea_visa_folder(file_name)
-#     return ""
 
 
 if __name__ == '__main__':

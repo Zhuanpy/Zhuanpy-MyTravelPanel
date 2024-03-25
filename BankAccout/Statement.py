@@ -7,6 +7,7 @@ pd.set_option('display.max_columns', None)
 class OriginalStatement:
 
     def __init__(self):
+
         self.file_path = os.path.join("E:/", "WORKING", "B-账单", "ZHANG ZHUAN UOB MASTER")
 
     def read_original_file(self):

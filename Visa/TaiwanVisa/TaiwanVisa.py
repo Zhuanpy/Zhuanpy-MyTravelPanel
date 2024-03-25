@@ -5,7 +5,7 @@ import os
 class TaiwanVisa:
 
     @classmethod
-    def taiwan_visa_copy_all_files(cls, name: str):
+    def create_visa_folder(cls, name: str):
         """
         :param name: 输入签证的 HID号 + 名字
         :return:
@@ -23,4 +23,4 @@ class TaiwanVisa:
 
 if __name__ == '__main__':
     file_name = "HID123_zhang zhuan"
-    TaiwanVisa.taiwan_visa_copy_all_files(file_name)
+    TaiwanVisa.create_visa_folder(file_name)

@@ -1,5 +1,4 @@
-from code.MyTravelPanel.FlightTicket.TicketScalping.utils import MouseKeyBoard, confirm_booking, key_inform, \
-    pause_times, flight_dic
+from utils import MouseKeyBoard, confirm_booking, key_inform, pause_times, flight_dic
 import pandas as pd
 
 pd.set_option('display.max_columns', None)

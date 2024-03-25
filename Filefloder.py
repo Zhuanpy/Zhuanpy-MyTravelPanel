@@ -3,7 +3,6 @@ import shutil
 
 
 class CreateVisaProgram:
-
     working_folder = os.path.join("E:/", "WORKING", "A-AIR_TICKET")
 
     working_visa_folder = os.path.join(working_folder, '01_Visa')
@@ -34,3 +33,5 @@ class CreateVisaProgram:
             else:
                 # 如果是文件，使用shutil复制
                 shutil.copy2(source_path, copy_file_path)
+
+        return True
