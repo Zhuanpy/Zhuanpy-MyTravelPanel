@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机票行程转化</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-container, .output-container {
+            flex-basis: 49%; /* 设置左右两个容器的宽度为45% */
+            margin-top: 10px; /* 设置顶部边距为10像素 */
+        }
+
+        textarea {
+            height: 20em; /* 设置文本框高度为20行 */
+            width: 100%; /* 设置文本框宽度为100% */
+        }
+
+        input[type="text"] {
+            width: calc(100% - 4px); /* 计算文本框宽度，减去边框的宽度 */
+            margin-bottom: 20px; /* 设置底部边距为10像素 */
+        }
+    </style>
+</head>
+<body>
+    <h2>机票行程转化</h2>
+
+    <form action="{{ url_for('flight_routes.convert') }}" method="post">
+        <div class="container">
+            <div class="input-container">
+                <label for="input_text">输入行程：</label><br><br>
+                <textarea id="input_text" name="input_text" rows="10" style="width: 100%;">{{ request.form['input_text'] }}</textarea><br><br>
+
+                <label for="luggage">行李：</label>
+                <input type="text" id="luggage" name="luggage" style="width: 30%;" value="{{ request.form['luggage'] }}">
+                <br>
+                <label for="price">价格：</label>
+                <input type="text" id="price" name="price" style="width: 30%;" value="{{ request.form['price'] }}">
+            </div>
+
+            <div class="output-container">
+                <label for="output_text">输出行程：</label><br><br>
+                <textarea id="output_text" name="output_text" rows="10" style="width: 100%;" readonly>{{ output_text }}</textarea><br><br>
+            </div>
+        </div>
+
+        <input type="radio" id="chinese" name="language" value="chinese" checked>
+        <label for="chinese">中文行程</label>
+        <input type="radio" id="english" name="language" value="english">
+        <label for="english">English itinerary</label><br><br>
+
+        <input type="submit" value="开始转换"> <br><br>
+
+    </form>
+</body>
+</html>
