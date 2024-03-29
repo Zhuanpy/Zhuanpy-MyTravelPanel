@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>录入航班信息</title>
+</head>
+<body>
+    <h1>录入航班信息</h1>
+
+    <form action="{{ url_for('flight_routes.submit_flight_information') }}" method="post">
+        
+		<label for="airline_code">Airline Code: </label>
+        <input type="text" id="airline_code" name="airline_code" required><br><br>
+        
+        <label for="flight_number">Flight Number: </label>
+        <input type="text" id="flight_number" name="flight_number" required><br><br>
+        
+        <label for="departure_airport">Departure Airport: </label>
+        <input type="text" id="departure_airport" name="departure_airport" required><br><br>
+        
+        <label for="arrival_airport">Arrival Airport: </label>
+        <input type="text" id="arrival_airport" name="arrival_airport" required><br><br>
+        
+        <label for="departure_time">Departure Time: </label>
+        <input type="text" id="departure_time" name="departure_time" required><br><br>
+        
+        <label for="arrival_time">Arrival Time: </label>
+        <input type="text" id="arrival_time" name="arrival_time" required><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
