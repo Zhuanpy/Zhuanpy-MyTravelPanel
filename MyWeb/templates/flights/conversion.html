@@ -27,10 +27,12 @@
     </style>
 </head>
 <body>
-    <h2>机票行程转化</h2>
+    <h2>机票行 程转化</h2>
 
     <form action="{{ url_for('flight_routes.convert') }}" method="post">
+
         <div class="container">
+
             <div class="input-container">
                 <label for="input_text">输入行程：</label><br><br>
                 <textarea id="input_text" name="input_text" rows="10" style="width: 100%;">{{ request.form['input_text'] }}</textarea><br><br>
@@ -46,6 +48,7 @@
                 <label for="output_text">输出行程：</label><br><br>
                 <textarea id="output_text" name="output_text" rows="10" style="width: 100%;" readonly>{{ output_text }}</textarea><br><br>
             </div>
+
         </div>
 
         <input type="radio" id="chinese" name="language" value="chinese" checked>
