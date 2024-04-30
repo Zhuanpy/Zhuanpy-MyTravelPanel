@@ -6,9 +6,6 @@ from email.message import Message
 import cv2
 import pyautogui
 
-# pyk = PyKeyboard()
-# mouse = PyMouse()
-
 flight_dic = {"SQ": ["*", "A@#1"],
               "CZ": ["*", "A@#1"],
               "HO": ["*", "A@#1"],

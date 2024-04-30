@@ -9,7 +9,7 @@ class CountHid:
 
     def __init__(self):
 
-        self._path = 'E:/WORKING/B-账单/BOOKING'
+        self._path = "E:/WORKING/B-账单/BOOKING"
 
     def read_all_inv(self, complete_month=0):
         path = os.path.join(self._path, 'Invoice')
@@ -61,7 +61,7 @@ class CountHid:
             # 注意：如果不确定列名，可以考虑输出 df.columns 看看具体的列名
             df = df.drop(columns=[1, 11, 6, 12, 13, 14, 15])
 
-            # 使用 dropna 处理缺失值，确保删除的是非空值而不是任何值
+            # 使用 drop na 处理缺失值，确保删除的是非空值而不是任何值
             df = df.dropna(subset=[0, 2])
             df[0] = df[0].astype(int)
             df[[2, 4]] = df[[2, 4]].astype(str)

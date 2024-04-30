@@ -4,8 +4,8 @@ import time
 import pandas as pd
 from pykeyboard import PyKeyboard
 
-from MyTravelPanel.FlightTicket.TicketScalping.utils import MouseKeyBoard, sent_email, key_inform, confirm_booking
-from MyTravelPanel.FlightTicket.TicketScalping.utils import flight_dic
+from utils_scalping import MouseKeyBoard, sent_email, key_inform, confirm_booking
+from utils_scalping import flight_dic
 
 pd.set_option('display.width', 5000)
 pd.set_option('display.max_columns', None)

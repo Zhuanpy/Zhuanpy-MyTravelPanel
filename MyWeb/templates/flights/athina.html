@@ -63,16 +63,19 @@
                 </div>
             {% endfor %}
         </div>
-        
 		<br>
-		
 		<div>
-		    <label for="date">出发日期:</label>
+		    <label for="date"> 出发日期: </label>
 		    <input type="text" id="date" name="date">
 		</div>
-		<br>
-        <button type="submit">确认</button>
+        <br>
+        <button type="submit"> 确认 </button>
     </form>
-	
+
+    <br>
+    <div class="output-container">
+    <label for="output_text">输出行程：</label><br><br>
+    <textarea id="output_text" name="output_text" rows="10" style="width: 100%;" >{{ output_text }}</textarea><br><br>
+    </div>
 </body>
 </html>

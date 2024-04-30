@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
-import csv
+from MyWeb.utils import FlightData as flight
 
 # 创建蓝图
 fb = Blueprint('flight_routes', __name__)
@@ -30,7 +30,6 @@ def convert():
         # 英文行程转换逻辑
         output_text = translate_text(input_text, language='EN', luggage=luggage, price=price)
 
-    print(output_text)
     return render_template('flights/conversion.html', output_text=output_text)
 
 
@@ -40,71 +39,29 @@ def render_scoot_page():
     return render_template('flights/scoot.html', output_text="")
 
 
-# 假设有10个航班信息
-flights = [
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-TRZ", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-MAA", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-DMK", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-CNX", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-    ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"]
-]
-
-
-# 创建CSV文件头部
-def create_csv(CSV_FILE):
-    with open(CSV_FILE, 'w', newline='') as csvfile:
-        fieldnames = ['AIRLINE CODE', 'FLIGHT NUMBER', 'DEPARTURE AIRPORT', 'ARRIVAL AIRPORT', 'DEPARTURE TIME',
-                      'ARRIVAL TIME']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-
-
-# 检查航班是否已经存在
-def flight_exists(CSV_FILE, flight_number):
-    with open(CSV_FILE, 'r', newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row['FLIGHT NUMBER'] == flight_number:
-                return True
-    return False
-
-
-# 添加航班信息到CSV文件
-def add_flight_to_csv(CSV_FILE, data):
-
-    with open(CSV_FILE, 'a', newline='') as csvfile:
-
-        fieldnames = ['AIRLINE CODE', 'FLIGHT NUMBER', 'DEPARTURE AIRPORT', 'ARRIVAL AIRPORT', 'DEPARTURE TIME',
-                      'ARRIVAL TIME']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writerow(data)
-
-
 # Athina  订单处理
 @fb.route('/athinaPage')
 def render_athina_page():
-    return render_template('flights/athina.html', flights=flights)
+    return render_template('flights/athina.html', flights=flight.usual_flight_list())
 
 
-@fb.route('/athinaResult')
+@fb.route('/athinaResult', methods=['POST'])
 def results_athina_page():
     # 获取选择内容
     # 将选择内容处理想要的结果
-    flight_index = ""
-    airline_code = ""
-    flight_number = ""
-    flight_date = ""
-    airport_code_departure = ""
-    airport_code_arrival = ""
-    flight_time_departure = ""
-    flight_time_arrival = ""
+    flight_inform = request.form['flight-info']
+    flight_date = request.form['date-info']
+    print(flight_inform)
+    print(flight_date)
+
+    flight_index = request.form['flight-info']
+    airline_code = request.form['flight-info']
+    flight_number = request.form['flight-info']
+
+    airport_code_departure = request.form['flight-info']
+    airport_code_arrival = request.form['flight-info']
+    flight_time_departure = request.form['flight-info']
+    flight_time_arrival = request.form['flight-info']
 
     results = f"{flight_index}. {airline_code} {flight_number} y  {flight_date} " \
               f"{airport_code_departure}{airport_code_arrival} Hk1  " \
@@ -124,7 +81,6 @@ def enter_flight_information():
 # 处理表单提交
 @fb.route('/submitFlightInformation', methods=['POST'])
 def submit_flight_information():
-
     airline_code = request.form['airline_code']
     flight_number = request.form['flight_number']
     departure_airport = request.form['departure_airport']
@@ -135,7 +91,7 @@ def submit_flight_information():
     # 检查航班是否已存在
     csv_file = "E:/Python/Project/MyTravelPanel/FlightTicket/data/flight-information.csv"
     print(f"flight_number: {flight_number}")
-    if flight_exists(csv_file, flight_number):
+    if flight.flight_exists(csv_file, flight_number):
         return render_template('flights/results.html', text="Flight information exist")
 
     # 添加航班信息到CSV文件
@@ -147,7 +103,9 @@ def submit_flight_information():
         'DEPARTURE TIME': departure_time,
         'ARRIVAL TIME': arrival_time
     }
-    add_flight_to_csv(csv_file, flight_data)
+    # 新数据添加到csv中；
+    flight.add_flight_to_csv(csv_file, flight_data)
+
     return render_template('flights/results.html', text="Flight information added successfully!")
 
 

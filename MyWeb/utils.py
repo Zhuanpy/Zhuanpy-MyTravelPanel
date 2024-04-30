@@ -1,10 +1,8 @@
 import time
-import pandas as pd
-# from code.MySql.DataBaseStockPool import TableStockPoolCount
+import csv
 
 
 def get_times():
-
     """
     get time
     """
@@ -13,51 +11,57 @@ def get_times():
     return str_time
 
 
-def get_trends_data(num=30):
+# 假设有10个航班信息
 
-    """
-    get trends data;
-    """
+class FlightData:
 
-    data = "TableStockPoolCount.load_poolCount()"
-    data = data.tail(num).reset_index(drop=True)
-    data['date'] = pd.to_datetime(data['date']).dt.strftime('%d%b')
-    # print(data)
-    # exit()
-    trends_stock = (list(data['date']),
-                    list(data['Up']),
-                    list(data['Down']))  # stock trends
+    @classmethod
+    def usual_flight_list(cls):
+        flight_list = [
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-TRZ", "1. 6E 1016 SIN CCU 0415 0600", ""],
+            ["新加坡-MAA", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-DMK", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-CNX", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
+            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"]
+        ]
+        return flight_list
 
-    re_trends_stock = (list(data['date']),
-                       list(data['Up']),
-                       list(data['ReUp']),
-                       list(data['Down']),
-                       list(data['ReDown']))  # stock re trends
+    @classmethod
+    def create_csv(cls, csv_file):
+        """ 创建CSV文件头部 """
+        with open(csv_file, 'w', newline='') as csvfile:
+            fieldnames = ['AIRLINE CODE', 'FLIGHT NUMBER', 'DEPARTURE AIRPORT', 'ARRIVAL AIRPORT', 'DEPARTURE TIME',
+                          'ARRIVAL TIME']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
 
-    # print(re_trends_stock)
-    trends_position = (list(data['date']),
-                       list(data['_up']),
-                       list(data['up_']),
-                       list(data['_down']),
-                       list(data['down_']))
+    @classmethod
+    def flight_exists(cls, csv_file, flight_number):
+        """ 检查航班是否已经存在 """
 
-    trends_stock_count = (
-        list(data['date']), list(data['Up1']), list(data['Up2']), list(data['Up3']), list(data['Down1']),
-        list(data['Down2']), list(data['Down3']))
+        with open(csv_file, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                if row['FLIGHT NUMBER'] == flight_number:
+                    return True
+        return False
 
-    board_trends_count = (list(data['date']), list(data['_BoardUp']), list(data['BoardUp_']), list(data['_BoardDown']),
-                          list(data['BoardDown_']),)
-
-    r = (trends_stock, re_trends_stock, trends_position, trends_stock_count, board_trends_count)
-
-    return r
+    @classmethod
+    def add_flight_to_csv(cls, CSV_FILE, data):
+        """ 添加航班信息到CSV文件 """
+        with open(CSV_FILE, 'a', newline='') as csvfile:
+            fieldnames = ['AIRLINE CODE', 'FLIGHT NUMBER', 'DEPARTURE AIRPORT', 'ARRIVAL AIRPORT', 'DEPARTURE TIME',
+                          'ARRIVAL TIME']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writerow(data)
 
 
 if __name__ == '__main__':
-
-    data_ = get_trends_data()
-
-
-    print(data_[0])
-    print(data_[1])
-    print(data_[2])
+    pass

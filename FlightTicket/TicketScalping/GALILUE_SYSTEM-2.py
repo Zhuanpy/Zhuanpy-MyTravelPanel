@@ -1,12 +1,10 @@
 import sys
 import time
-
 import pandas as pd
 from pykeyboard import PyKeyboard
-
-from code.MyTravelPanel.FlightTicket.TicketScalping.utils import sent_email, key_inform, confirm_booking
-from code.MyTravelPanel.FlightTicket.TicketScalping.utils import flight_dic
-from code.MyTravelPanel.FlightTicket.TicketScalping.utils import MouseKeyBoard as mkb
+from utils_scalping import sent_email, key_inform, confirm_booking
+from utils_scalping import flight_dic
+from utils_scalping import MouseKeyBoard as mkb
 
 pd.set_option('display.width', 5000)
 pd.set_option('display.max_columns', None)
@@ -203,8 +201,7 @@ class TravelSport:
             confirms.append(name)
 
         author = 'ZHUAN'
-        date_ = pd.Timestamp('today').strftime('%d%b')
-        confirm_booking(author, date_)
+        date_ = pd.Timestamp.today().strftime('%d%b')
 
         # Sent_email
         key_inform('*R')
@@ -220,6 +217,7 @@ class TravelSport:
         return confirms
 
     def windows_check_ticket(self):
+
         """ 整理数据 """
         # 读取整理CSV数据
         waiting = pd.read_excel('WaitingList.xls')
@@ -235,7 +233,8 @@ class TravelSport:
         calendars = pd.read_excel('FlightCalendar.xls').dropna(subset=['Itinerary'])
         calendars['Date'] = calendars['Date'].dt.date
         range_date = waiting[(waiting['Paxs'] == 'Swipe Date Range') & (waiting['Complete'] == 0)]
-
+        print(range_date)
+        exit()
         for r in range_date.index:
             itin = range_date.loc[r, 'Itinerary']
             start_ = range_date.loc[r, 'start']
@@ -334,7 +333,7 @@ class TravelSport:
                 confirms.append(name)
 
             author = 'ZHUAN'
-            date_ = pd.Timestamp('today').strftime('%d%b')
+            date_ = pd.Timestamp.today().strftime('%d%b')
             confirm_booking(author, date_)
 
             """ Sent_email """
@@ -375,7 +374,8 @@ if __name__ == '__main__':
 
         waiting = pd.read_excel('WaitingList.xls')
         waiting = waiting[(waiting['Paxs'] != 'Swipe Date Range') & (waiting['Complete'] == 0)]
-
+        print(waiting)
+        exit()
         nums = waiting.shape[0]
 
 # 打包 pyinstaller -F E:\Python\Project\Air_ticket\Galilue_System\GALILUE_SYSTEM.py

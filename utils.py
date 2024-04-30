@@ -4,7 +4,6 @@ from Filefloder import CreateVisaProgram as Program
 
 
 def create_my_folder(file_type: str, hid: str, name: str, file_path=None):
-
     if file_path:
         _path = os.path.join(Program.working_folder, file_path)
 
@@ -18,5 +17,9 @@ def create_my_folder(file_type: str, hid: str, name: str, file_path=None):
 
 
 if __name__ == '__main__':
+    # self._path = 'E:/WORKING/B-账单/BOOKING'
+    _path = os.path.join("E:",   "WORKING", "B-账单", "BOOKING")
+    print(_path)
+    exit()
     a, b, c = 'China', '123', 'Huang li'
     create_my_folder(a, b, c)

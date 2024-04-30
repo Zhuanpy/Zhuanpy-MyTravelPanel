@@ -11,6 +11,7 @@ class OriginalStatement:
         self.file_path = os.path.join("E:/", "WORKING", "B-账单", "ZHANG ZHUAN UOB MASTER")
 
     def read_original_file(self):
+
         original_path = os.path.join(self.file_path, "原始下载")
 
         files = os.listdir(original_path)
@@ -117,6 +118,7 @@ class OriginalStatement:
         """ 读取 statement """
         latest_path = os.path.join(self.file_path, "整理下载", "整理下载.xls")
         statement = pd.read_excel(latest_path, sheet_name="Sheet1", engine='openpyxl')
+
         statement = statement[(statement["EO"] != "Na") &
                               (statement["User"] == "COM") &
                               (~statement["EO"].isnull())]

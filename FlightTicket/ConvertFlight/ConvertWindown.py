@@ -1,10 +1,7 @@
 import tkinter as tk
 
 
-
-
 def convertfunction(root):
-
     def convert_text():
         input_text = text_entry_a.get("1.0", "end-1c")
 
