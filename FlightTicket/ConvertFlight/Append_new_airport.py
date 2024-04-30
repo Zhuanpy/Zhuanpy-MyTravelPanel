@@ -2,6 +2,13 @@ import pandas as pd
 
 
 def append_airport_code_data(city_cn: str, code3: str, code4: str, airport_name_cn: str, airport_name_en: str):
+    """ 添加新机场数据到数据库
+    :param
+    city_cn:
+    code3: 三字代码
+
+    """
+
     # Load existing CSV file into a DataFrame
     file_path = 'airport_data.csv'
     df = pd.read_csv(file_path)

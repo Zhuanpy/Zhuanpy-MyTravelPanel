@@ -3,6 +3,7 @@ import shutil
 
 
 class CreateVisaProgram:
+
     working_folder = os.path.join("E:/", "WORKING", "A-AIR_TICKET")
 
     working_visa_folder = os.path.join(working_folder, '01_Visa')

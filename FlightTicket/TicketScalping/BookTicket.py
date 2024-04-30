@@ -1,4 +1,4 @@
-from utils import MouseKeyBoard, confirm_booking, key_inform, pause_times, flight_dic
+from utils_scalping import MouseKeyBoard, confirm_booking, key_inform, pause_times, flight_dic
 import pandas as pd
 
 pd.set_option('display.max_columns', None)
