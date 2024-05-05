@@ -25,6 +25,7 @@ class CountHid:
             name = os.path.join(path, f)  # f'{path}/{f}'
 
             df = pd.read_excel(name, sheet_name='Sheet1', header=None)  # , names=columns)
+
             df = df.drop(columns=[1, 7, 9, 10, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28])
 
             df = df.dropna(subset=[0, 2])

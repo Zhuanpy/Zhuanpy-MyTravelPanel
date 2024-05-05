@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-
+import logging
 pd.set_option('display.max_columns', None)
 
 
@@ -86,7 +86,7 @@ class OriginalStatement:
 
         original = original[columns]
 
-        # 去除转入数据
+        # 筛选转入账单数据
         original = original[original["Withdrawal"] != 0]
 
         # 去除转入数据
@@ -105,7 +105,7 @@ class OriginalStatement:
         latest_statement = original[~original["Id"].isin(previous["Id"])]
 
         if latest_statement.empty:
-            print("无最整理账单；")
+            logging.warning("无最整理账单；")
 
         else:
             latest_statement = pd.concat([previous, latest_statement])
@@ -136,13 +136,13 @@ class OriginalStatement:
         latest_statement = statement[~statement["Id"].isin(previous["Id"])]
 
         if latest_statement.empty:
-            print("无最新公司账单;")
+            logging.warning("无最新公司账单;")
             return latest_statement
 
         # 保存 Excel 文件之前设置选项
         latest_statement = pd.concat([previous, latest_statement])
         latest_statement.to_excel(previous_path, index=False, engine='openpyxl')
-        print("最新公司账单已更新;")
+        logging.warning("最新公司账单已更新;")
         return latest_statement
 
     def latest_self_statement(self):
@@ -166,13 +166,13 @@ class OriginalStatement:
         """ 最新 statement """
         latest_statement = statement[~statement["Id"].isin(previous["Id"])]
         if latest_statement.empty:
-            print("无最新个人账单;")
+            logging.warning("无最新个人账单;")
 
         else:
             # 保存 Excel 文件之前设置选项
             latest_statement = pd.concat([previous, latest_statement])
             latest_statement.to_excel(self_path, index=False, engine='openpyxl')
-            print("最新个人账单已更新;")
+            logging.warning("最新个人账单已更新;")
 
         return latest_statement
 
@@ -186,7 +186,7 @@ class OriginalStatement:
         latest_statement = latest_statement[~latest_statement["EO"].isin(to_company_statement["EO"])]
 
         if latest_statement.empty:
-            print("无最新公司账单;")
+            logging.warning("无最新公司账单;")
 
         else:
             latest_statement = latest_statement[["T-Date", "Credit date", "EO", "Withdrawal", "Description"]]
@@ -204,7 +204,13 @@ class OriginalStatement:
         """存储一份给老板"""
         load_path = os.path.join(self.file_path, "最新账单", "Toboss", "ToCompany.xls")
         statement = pd.read_excel(load_path, sheet_name="Sheet1", engine='openpyxl')
+
         statement = statement[statement["status"] == "pending"].reset_index(drop=True)
+
+        if statement.empty:
+            logging.warning("To boss 无最新账单;")
+            return True
+
         statement["T-Date"] = statement["T-Date"].dt.date
         statement["Credit date"] = statement["Credit date"].dt.date
 
@@ -219,7 +225,7 @@ class OriginalStatement:
         file_name = f"ZHANG ZHUAN UOB_{last_date}.xls"
         path = os.path.join(self.file_path, "最新账单", "Toboss", file_name)
         statement.to_excel(path, index=False, engine='openpyxl')
-        print("To boss账单已更新;")
+        logging.warning("To boss账单已更新;")
 
     def statement_process(self):
 

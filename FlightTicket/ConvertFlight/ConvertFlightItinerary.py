@@ -1,25 +1,13 @@
-import tkinter as tk
 from datetime import datetime
-import pandas as pd
+from FlightTicket.ConvertFlight.flight_utils import MysqlTravelData
 
 
 def convert_date_format(original_date: str):
-
-    # 月份名称映射字典
-    month_mapping = {
-        'JAN': '01',
-        'FEB': '02',
-        'MAR': '03',
-        'APR': '04',
-        'MAY': '05',
-        'JUN': '06',
-        'JUL': '07',
-        'AUG': '08',
-        'SEP': '09',
-        'OCT': '10',
-        'NOV': '11',
-        'DEC': '12'
-    }
+    """ 月份名称 字典映射 """
+    month_mapping = {'JAN': '01', 'FEB': '02', 'MAR': '03',
+                     'APR': '04', 'MAY': '05', 'JUN': '06',
+                     'JUL': '07', 'AUG': '08', 'SEP': '09',
+                     'OCT': '10', 'NOV': '11', 'DEC': '12'}
 
     try:
         # 解析原始日期字符串
@@ -38,37 +26,44 @@ def convert_date_format(original_date: str):
         return "无效的日期格式"
 
 
-def transfer2airport(SIN: str):
-    
-    import os
-    _path = "E:\Python\Project\MyTravelPanel\FlightTicket\ConvertFlight"
-    df = pd.read_csv(f'{_path}/airport_data.csv')
-    df = df[df['机场三字码'] == SIN]
-    if df.shape:
-        city = df['城市名'].values[0]
-        cn_airport = df['机场名称'].values[0]
-        en_airport = df['英文名称'].values[0]
-        results = (city, cn_airport, en_airport)
+def transfer2airport(code3: str):
+    # 连接数据库
+    connection = MysqlTravelData.connection()
 
-    else:
-        results = None
+    try:
+
+        with connection.cursor() as cursor:
+
+            # 执行查询
+            sql = f"SELECT * FROM airport_data WHERE 机场三字码 = '{code3}'"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            # result = ('北京', 'PEK', 'ZBAA', '北京首都国际机场', 'BEIJING')
+            if result:
+                results = (result[0], result[3], result[4])
+
+            else:
+                results = None
+
+    finally:
+        connection.close()
 
     return results
 
 
 def organize_text(texts):
-
     """
-            # text：
-            #  1. MU  568 S  05AUG SINPVG HK1  1635   2205  O*       E SA  1
-            #  2. MU 6561 B  06AUG PVGHRB HK1  0755   1050  O*       E SU  1
-            #  3. FM 9062 B  13AUG HRBPVG HK1  1745   2100  O*         SU  2
-            #  4. MU  543 V  13AUG PVGSIN HK1  2350  #0525  O*       E SU  2
-            """
+    # text：
+    #  1. MU  568 S  05AUG SINPVG HK1  1635   2205  O*       E SA  1
+    #  2. MU 6561 B  06AUG PVGHRB HK1  0755   1050  O*       E SU  1
+    #  3. FM 9062 B  13AUG HRBPVG HK1  1745   2100  O*         SU  2
+    #  4. MU  543 V  13AUG PVGSIN HK1  2350  #0525  O*       E SU  2
+    """
 
     lines = texts.split('\n')
 
     lis = []
+
     for i in lines:
         if len(i) < 10:
             continue
@@ -151,64 +146,8 @@ def translate_text(texts, language='CN', luggage=None, price=None):
     return itn
 
 
-class FlightConvertApp:
-
-    def __init__(self, master):
-
-        self.master = master
-        self.master.title("机票行程转化")
-
-        self.label_a = tk.Label(master, text="输入行程")
-        self.label_a.pack()
-
-        self.text_frame_a = tk.Frame(master, padx=10, pady=5)
-        self.text_frame_a.pack()
-
-        self.text_entry_a = tk.Text(self.text_frame_a, height=8, width=65, wrap=tk.WORD)
-        self.text_entry_a.pack()
-
-        self.label_result = tk.Label(master, text="输出行程")
-        self.label_result.pack()
-
-        self.text_frame_output = tk.Frame(master, padx=10, pady=5)
-        self.text_frame_output.pack()
-
-        self.text_output = tk.Text(self.text_frame_output, height=18, width=65, wrap=tk.WORD, state=tk.NORMAL)
-        self.text_output.pack()
-
-        self.result_var = tk.StringVar()
-        self.result_var.set("Result B")  # 默认选择结果B
-
-        self.result_b_radio = tk.Radiobutton(master, text="中文行程", variable=self.result_var, value="中文行程")
-        self.result_b_radio.pack()
-
-        self.result_c_radio = tk.Radiobutton(master, text="英文行程", variable=self.result_var, value="英文行程")
-        self.result_c_radio.pack()
-
-        self.convert_button = tk.Button(master, text="  转 化  ", command=self.convert_text)
-        self.convert_button.pack()
-
-    def convert_text(self):
-
-        input_text = self.text_entry_a.get("1.0", "end-1c")
-        selected_result = self.result_var.get()
-
-        if selected_result == "中文行程":
-            converted_text = translate_text(input_text, 'CN')
-
-        elif selected_result == "英文行程":
-            converted_text = translate_text(input_text, 'EN')
-
-        else:
-            converted_text = "Invalid result selection"
-
-        self.text_output.delete("1.0", "end")
-        self.text_output.insert("1.0", converted_text)
-
-
 if __name__ == "__main__":
-    # root = tk.Tk()
-    # app = FlightConvertApp(root)
-    # root.mainloop()
-    r = transfer2airport('SIN')
+    # # 使用示例
+    SIN = 'PEK'
+    r = transfer2airport(SIN)
     print(r)
