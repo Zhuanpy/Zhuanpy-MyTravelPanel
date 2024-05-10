@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF文件处理</title>
+</head>
+<body>
+    <h1>PDF文件处理</h1>
+
+    <!-- 图片合并表单 -->
+    <h2>图片合并为PDF</h2>
+
+     <form method="post" action="{{url_for('files_routes.merge_images_to_pdf')}}" >
+        <label for="imageFolderPath">图片文件夹路径:</label>
+        <input type="text" id="imageFolderPath" name="imageFolderPath">
+        <button type="submit" name="submit_button" value="merge_images">图片合并为PDF</button>
+    </form>
+
+    <!-- 多个PDF合并表单 -->
+    <h2>多个PDF合并</h2>
+    <form id="mergePdfForm">
+        <label for="pdfFolderPath">PDF文件夹路径:</label>
+        <input type="text" id="pdfFolderPath" name="pdfFolderPath">
+        <button type="button" >多个PDF合并</button>
+    </form>
+</body>
+</html>
