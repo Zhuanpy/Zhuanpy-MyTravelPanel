@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request
-from Visa.VisaPdfFile.pdffile import MyPdfFile
-
 from routes_visa import bp as visa_routes
 from route_flight import fb as flight_routes
+from routes_files import fpb as files_routes
 
 app = Flask(__name__)
 
 app.register_blueprint(visa_routes)
 app.register_blueprint(flight_routes)
+app.register_blueprint(files_routes)
 
 
 @app.route('/')
@@ -32,20 +32,7 @@ def accommodation():
 
 @app.route('/file_processing', methods=['GET', 'POST'])
 def file_processing():
-    if request.method == 'POST':
-        # 获取输入的文件夹路径
-        folder_path = request.form['folder_path']
-        print(folder_path)
-        # 处理图片并生成PDF
-        my_pdf = MyPdfFile(folder_path)
-        my_pdf.merge_images2pdf()
-
-        # 返回结果页面
-        return render_template('result.html', folder_path=folder_path)
-
-    # 如果是 GET 请求，返回包含输入框的表单页面
-
-    return render_template('file_processing.html')
+    return render_template('files/pdf.html')
 
 
 @app.route('/my_test')

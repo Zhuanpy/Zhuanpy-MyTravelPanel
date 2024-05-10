@@ -108,4 +108,9 @@ def append_airport_data(city_cn: str, code3: str, code4: str, airport_name_cn: s
 
 
 if __name__ == '__main__':
-    download_airport_code()
+    city_cn = "扬州"
+    code3 = "YTY"
+    code4 = "ZSYA"
+    airport_name_cn = "扬泰国际机场"
+    airport_name_en = "Yangzhou Taizhou International Airport"
+    append_airport_data(city_cn, code3, code4, airport_name_cn, airport_name_en)

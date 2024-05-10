@@ -148,6 +148,6 @@ def translate_text(texts, language='CN', luggage=None, price=None):
 
 if __name__ == "__main__":
     # # 使用示例
-    SIN = 'PEK'
+    SIN = 'YTY'
     r = transfer2airport(SIN)
     print(r)
