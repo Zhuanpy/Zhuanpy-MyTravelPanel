@@ -17,6 +17,7 @@ class FlightData:
 
     @classmethod
     def usual_flight_list(cls):
+
         flight_list = [
             ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
             ["新加坡-TRZ", "1. 6E 1016 SIN CCU 0415 0600", ""],

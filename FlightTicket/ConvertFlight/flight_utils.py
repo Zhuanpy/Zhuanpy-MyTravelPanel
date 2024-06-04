@@ -50,6 +50,7 @@ class AthinaBooking:
 
 
 def download_airport_code():
+
     for i in range(10, 290):
         url = f'https://airportcode.bmcx.com/{i}__airportcode/'
         response = requests.get(url)
