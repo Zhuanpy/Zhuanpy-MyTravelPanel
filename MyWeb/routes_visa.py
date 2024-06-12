@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request
 from Visa.Korea.KoreavisaFun import KoreaVisa
 from Visa.Janpan.japanvisa import create_japan_visa_folder
 from Visa.TaiwanVisa.TaiwanVisa import TaiwanVisa as twd
+from Visa.NewZealandVisa import NewZealandVisa as nzl
 
 # 创建蓝图
 bp = Blueprint('visa_routes', __name__)
@@ -93,4 +94,12 @@ def visa_Malaysia():
 # uk visa
 @bp.route('/visaUk', methods=['GET', 'POST'])
 def visa_Uk():
-    return render_template('visas/Uk_visa.html')
+    return render_template('visas/result.html')
+
+
+# uk visa
+@bp.route('/visaNZL', methods=['GET', 'POST'])
+def visa_NewZealand_processing():
+    file_name = request.form.get("path_create_project")
+    nzl.create_visa_folder(file_name)
+    return render_template('visas/result.html')

@@ -17,21 +17,7 @@ class FlightData:
 
     @classmethod
     def usual_flight_list(cls):
-
-        flight_list = [
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-TRZ", "1. 6E 1016 SIN CCU 0415 0600", ""],
-            ["新加坡-MAA", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-DMK", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-CNX", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"],
-            ["新加坡-达卡", "1. 6E 1016 SIN CCU 0415 0600", "2. 6E 1105 CCU DAC 1450 1615"]
-        ]
+        flight_list = []
         return flight_list
 
     @classmethod
@@ -65,4 +51,5 @@ class FlightData:
 
 
 if __name__ == '__main__':
-    pass
+    flight = FlightData()
+    # pass
