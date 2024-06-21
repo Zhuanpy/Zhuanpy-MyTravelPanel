@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import logging
+
 pd.set_option('display.max_columns', None)
 
 
@@ -93,6 +94,12 @@ class OriginalStatement:
         original = original.drop(columns=['Deposit'])  # .reset_index(drop=True)
         original = original.dropna(subset=['Description']).reset_index(drop=True)
 
+        # 去除已经整理的日期
+        checked_path = os.path.join(self.file_path, "原始下载", "Keywords", "checked_date.txt")
+        with open(checked_path, 'r', encoding='utf-8') as file:
+            checked_date = file.read()
+        original = original[original["T-Date"] > pd.to_datetime(checked_date)]
+
         # 提取 & 添加关键字列
         original = self.key_words_data(original)
 
@@ -108,6 +115,20 @@ class OriginalStatement:
             logging.warning("无最整理账单；")
 
         else:
+
+            """ 找出已核查日期并 保存 """
+            checked_date = latest_statement['T-Date'].drop_duplicates().tolist()
+
+            if len(checked_date) >= 2:
+                # 获取并保存 倒数第二个值
+                checked_date = checked_date[-2]
+                checked_date = checked_date.isoformat()
+
+                checked_path = os.path.join(self.file_path, "原始下载", "Keywords", "checked_date.txt")
+                with open(checked_path, 'w', encoding='utf-8') as file:
+                    file.write(checked_date)
+
+            """ 保存最新的整理账单"""
             latest_statement = pd.concat([previous, latest_statement])
             latest_statement.to_excel(previous_path, index=False, engine='openpyxl')
 

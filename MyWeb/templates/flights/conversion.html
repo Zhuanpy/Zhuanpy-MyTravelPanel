@@ -5,37 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>机票行程转化</title>
     <style>
+        body {
+            padding-left: 80px;
+            padding-right: 80px;
+        }
+
         .container {
             display: flex;
             justify-content: space-between;
         }
 
         .input-container, .output-container {
-            flex-basis: 49%; /* 设置左右两个容器的宽度为45% */
-            margin-top: 10px; /* 设置顶部边距为10像素 */
+            flex-basis: 49%;
+            margin-top: 10px;
         }
 
         textarea {
-            height: 20em; /* 设置文本框高度为20行 */
-            width: 100%; /* 设置文本框宽度为100% */
+            height: 20em;
+            width: 100%;
         }
 
         input[type="text"] {
-            width: calc(100% - 4px); /* 计算文本框宽度，减去边框的宽度 */
-            margin-bottom: 20px; /* 设置底部边距为10像素 */
+            width: calc(100% - 4px);
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h2>机票行 程转化</h2>
+    <h2>机票行程转化</h2>
 
-    <form action="{{ url_for('flight_routes.convert') }}" method="post">
+    <form action="{{ url_for('flight_routes.itinerary_convert_process') }}" method="post">
 
         <div class="container">
 
             <div class="input-container">
                 <label for="input_text">输入行程：</label><br><br>
-                <textarea id="input_text" name="input_text" rows="10" style="width: 100%;">{{ request.form['input_text'] }}</textarea><br><br>
+                <textarea id="input_text" name="input_text" rows="10">{{ request.form['input_text'] }}</textarea><br><br>
 
                 <label for="luggage">行李：</label>
                 <input type="text" id="luggage" name="luggage" style="width: 30%;" value="{{ request.form['luggage'] }}">
@@ -46,7 +51,7 @@
 
             <div class="output-container">
                 <label for="output_text">输出行程：</label><br><br>
-                <textarea id="output_text" name="output_text" rows="10" style="width: 100%;" >{{ output_text }}</textarea><br><br>
+                <textarea id="output_text" name="output_text" rows="10">{{ output_text }}</textarea><br><br>
             </div>
 
         </div>

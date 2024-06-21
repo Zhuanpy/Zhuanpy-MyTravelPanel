@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>航班信息输入</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0 250px; /* 为网页两端预留250像素边距 */
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group input {
+            margin-right: 10px;
+        }
+        textarea {
+            width: calc(100% - 20px); /* 确保textarea不会超出边距 */
+            height: 150px;
+            margin-top: 20px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h2>航班信息输入</h2>
+    <div id="inputContainer">
+        <div class="input-group">
+            <label>航班号：<input type="text" class="flightNumber" placeholder="例如 TR 898"></label>
+            <label>日期：<input type="text" class="flightDate" placeholder="例如 01JUN"></label>
+            <button onclick="removeInput(this)">删除</button>
+        </div>
+    </div>
+    <button onclick="addInput()">增加输入</button> <br /><br /><br /><br />
+
+    <button onclick="sendData()">输出行程</button> <br /><br />
+    
+    <h2>行程信息</h2>
+    <textarea id="itinerary" readonly></textarea>
+
+    <script>
+        function addInput() {
+            const container = document.getElementById('inputContainer');
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+            inputGroup.innerHTML = `
+                <label>航班号：<input type="text" class="flightNumber" placeholder="例如 TR 898"></label>
+                <label>日期：<input type="text" class="flightDate" placeholder="例如 01JUN"></label>
+                <button onclick="removeInput(this)">删除</button>
+            `;
+            container.appendChild(inputGroup);
+        }
+
+        function removeInput(button) {
+            const inputGroup = button.parentElement;
+            inputGroup.remove();
+        }
+
+        function sendData() {
+            const flightNumbers = document.querySelectorAll('.flightNumber');
+            const flightDates = document.querySelectorAll('.flightDate');
+            const data = [];
+
+            flightNumbers.forEach((flightNumber, index) => {
+                const flightDate = flightDates[index];
+                data.push({
+                    flightNumber: flightNumber.value,
+                    flightDate: flightDate.value
+                });
+            });
+
+            fetch('{{ url_for('flight_routes.flight_to_athina_page_process') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                const itineraryTextArea = document.getElementById('itinerary');
+                itineraryTextArea.value = result.itinerary;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

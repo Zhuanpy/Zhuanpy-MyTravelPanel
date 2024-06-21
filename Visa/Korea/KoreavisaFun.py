@@ -51,37 +51,13 @@ class KoreaVisa:
     def create_visa_folder(cls, file_name: str):
 
         # 项目资源文件夹
-        source_folder = os.path.join(Program.visa_requirements_folder, '01_Korea_vsia', "vsia_form")
+        source_folder = os.path.join(Program.visa_requirements_folder, '01_Korea_visa', "visa_form")
 
         # 项目目标文件夹
-        name = f'Korea_vsia_{file_name}'
+        name = f'Korea_visa_{file_name}'
         destination_folder = os.path.join(Program.working_folder, name)
 
         Program.copy_folder_contents(source_folder, destination_folder)
-
-        # try:
-        #     file_name = file_name.upper()
-        #     folder_name = f'KOR_VISA_{file_name}'
-        #
-        #     folder_path = Path(f'{cls.root_path}/{folder_name}')
-        #     folder_path.mkdir(parents=True)
-        #
-        #     # 创建子文件夹
-        #     temp = Path(f'{cls.root_path}/{folder_name}/temp')
-        #     temp.mkdir(parents=True)
-        #
-        #     """ 复制 文档列表 excel """
-        #     document_list_source_path = f'{cls.data_path}/DocumentList.xls'
-        #     document_list_destination_path = f'{folder_path}/DocumentList.xls'
-        #     shutil.copy(document_list_source_path, document_list_destination_path)
-        #
-        #     """ 复制 表格 excel """
-        #     form_source_path = f'{cls.data_path}/FormSample.xls'
-        #     form_destination_path = f'{folder_path}/FormSample.xls'
-        #     shutil.copy(form_source_path, form_destination_path)
-        #
-        # except FileExistsError:
-        #     pass
 
     @classmethod
     def fill_form(cls, folder: str):

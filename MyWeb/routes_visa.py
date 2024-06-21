@@ -3,18 +3,20 @@ from Visa.Korea.KoreavisaFun import KoreaVisa
 from Visa.Janpan.japanvisa import create_japan_visa_folder
 from Visa.TaiwanVisa.TaiwanVisa import TaiwanVisa as twd
 from Visa.NewZealandVisa import NewZealandVisa as nzl
+from Visa.Australia.AustraliaVisa import AustraliaVisa as aus
 
 # 创建蓝图
 bp = Blueprint('visa_routes', __name__)
 
 
 @bp.route('/visaKoreaPage', methods=['GET', 'POST'])
-def visa_Korea_page():
+def visa_Korea():
     return render_template('visas/korea.html')
 
 
 @bp.route('/visaKoreaProcessing', methods=['POST'])
 def visa_Korea_processing():
+
     submit_button = request.form.get('submit_button')
 
     if submit_button == 'create_project':
@@ -79,10 +81,16 @@ def visa_China():
     return render_template('visas/China_visa.html')
 
 
-# Australia visa ,
 @bp.route('/visaAustralia', methods=['GET', 'POST'])
 def visa_Australia():
     return render_template('visas/Australia_visa.html')
+
+
+@bp.route('/visaAustraliaProcessing', methods=['GET', 'POST'])
+def visa_Australia_processing():
+    file_name = request.form.get("path_create_project")
+    aus.create_visa_folder(file_name)
+    return render_template('visas/result.html')
 
 
 # Malaysia visa
@@ -97,8 +105,12 @@ def visa_Uk():
     return render_template('visas/result.html')
 
 
-# uk visa
 @bp.route('/visaNZL', methods=['GET', 'POST'])
+def visa_NewZealand():
+    return render_template('visas/NZL_visa.html')
+
+
+@bp.route('/visaNZLProcesseing', methods=['GET', 'POST'])
 def visa_NewZealand_processing():
     file_name = request.form.get("path_create_project")
     nzl.create_visa_folder(file_name)

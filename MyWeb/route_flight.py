@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
 from MyWeb.utils import FlightData as flight
 
@@ -13,7 +13,7 @@ def itinerary_conversion():
 
 
 @fb.route('/convertPage', methods=['POST'])
-def convert():
+def itinerary_convert_process():
     input_text = request.form['input_text']
     language = request.form['language']
     luggage = request.form['luggage']
@@ -31,6 +31,28 @@ def convert():
         output_text = translate_text(input_text, language='EN', luggage=luggage, price=price)
 
     return render_template('flights/conversion.html', output_text=output_text)
+
+
+# Athina 机票订单处理
+@fb.route('/athinaPage')
+def flight_to_athina_page():
+    return render_template('flights/Flight_booking_to_Athina.html', flights=flight.usual_flight_list())
+
+
+@fb.route('/process', methods=['POST'])
+def flight_to_athina_page_process():
+    data = request.json
+    itinerary = ""
+
+    num = 1
+    for entry in data:
+        flight_number = entry.get('flightNumber', '未知航班号')
+        flight_date = entry.get('flightDate', '未知日期')
+        r = flight.athina_booking_code(num, flight_number, flight_date)
+        itinerary += f"{r}\n"
+        num += 1
+
+    return jsonify({'itinerary': itinerary})
 
 
 # 酷航信息输入
