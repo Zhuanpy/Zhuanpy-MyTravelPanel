@@ -6,125 +6,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>工作界面</title>
 
-    <style>
+	<style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            background-color: #f0f4f8;
+            color: #333;
         }
-
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
         .container {
-            max-width: calc(100% - 300px); /* 100% 减去左右各 200 像素 */
-            margin: 20px auto;
+            width: 80%;
+            margin: 0 auto;
+            background-color: #ffffff;
             padding: 20px;
-            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
         .section {
-            margin-bottom: 40px;
+            width: 100%;
+            margin-bottom: 20px;
         }
-
         .button-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: left;
-            gap: 15px;
-        }
-
-        button {
-            width: 16ch; /* 固定宽度为6个字符 */
-            padding: 10px 0; /* 调整上下内边距，使其看起来更均匀 */
-            font-size: 16px;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
-            transition: background-color 0.3s, border-color 0.3s;
+            gap: 10px;
+			justify-content: flex-start; /* 子元素在主轴（水平轴）上居左对齐 */
             text-align: center;
         }
-
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #2c3e50;
+            background-color: #2c3e50;
+            color: #ffffff;
+            transition: background-color 0.3s, border-color 0.3s;
+            border-radius: 5px;
+			width: 190px; 
+        }
         button:hover {
-            background-color: #e0e0e0;
-            border-color: #999;
+            background-color: #34495e;
+            border-color: #34495e;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 22px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>工作界面</h1>
-        <br>
-        <br>
-        <div class="section">
-            <h2>签证区域</h2>
-            <div class="button-container">
-                <a href="{{url_for('visa_routes.visa_Korea')}}"><button>韩国签证</button></a>
-                <a href="{{url_for('visa_routes.visa_Japan')}}"><button>日本签证</button></a>
-                <a href="{{url_for('visa_routes.visa_Us')}}"><button>美国签证</button></a>
-                <a href="{{url_for('visa_routes.visa_China')}}"><button>中国签证</button></a>
-                <a href="{{url_for('visa_routes.visa_Taiwan')}}"><button>台湾签证</button></a>
-                <a href="{{url_for('visa_routes.visa_Australia')}}"><button>澳洲签证</button></a>
-                <a href="{{url_for('visa_routes.visa_Malaysia')}}"><button>马来签证</button></a>
-                <a href="{{url_for('visa_routes.visa_Uk')}}"><button>英国签证</button></a>
-                <a href="{{url_for('visa_routes.visa_NewZealand')}}"><button>新西兰签证</button></a>
+        
+		<div class="section">
+			<div class="center">
+				<h1>工作界面</h1>
+			</div>
+		</div>	
+		<div class="section">
+			<h3>签证区域</h3>
+			<div class="button-container">
+				<a href="{{url_for('visa_routes.visa_Korea')}}"><button>韩国签证</button></a>
+				<a href="{{url_for('visa_routes.visa_Japan')}}"><button>日本签证</button></a>
+				<a href="{{url_for('visa_routes.visa_Us')}}"><button>美国签证</button></a>
+				<a href="{{url_for('visa_routes.visa_China')}}"><button>中国签证办理</button></a>
+				<a href="{{url_for('visa_routes.visa_Taiwan')}}"><button>台湾签证</button></a>
+				<a href="{{url_for('visa_routes.visa_Australia')}}"><button>澳洲签证</button></a>
+				<a href="{{url_for('visa_routes.visa_Malaysia')}}"><button>马来签证</button></a>
+				<a href="{{url_for('visa_routes.visa_Uk')}}"><button>英国签证</button></a>
+				<a href="{{url_for('visa_routes.visa_NewZealand')}}"><button>新西兰签证</button></a>
+				<a href="{{url_for('visa_routes.visa_NewZealand')}}"><button>中国护照办理</button></a>
+				<a href="{{url_for('visa_routes.visa_NewZealand')}}"><button>其它</button></a>
+			</div>
+		</div>
+		<div class="section">
+			<h3>机票区域</h3>
+			<div class="button-container">
+				<a href="{{url_for('flight_routes.itinerary_conversion')}}"><button>机票行程简化</button></a>
+				<a href="{{url_for('flight_routes.flight_to_athina_page')}}"><button>机票订单Athina</button></a>
+				<a href="{{url_for('flight_routes.render_athina_page')}}"><button>机票常用订单</button></a>
+				<a href="{{url_for('flight_routes.render_athina_page')}}"><button>Athina一般订单</button></a>
+				<a href="{{url_for('flight_routes.enter_flight_information')}}"><button>添加航班信息</button></a>
+				<a href="{{url_for('flight_routes.enter_flight_information')}}"><button>酷航信息输入</button></a>
+			</div>
+		</div>
+		<div class="section">
+			<h3>配套区域</h3>
+			<div class="button-container">
+				<a href="/accommodation"><button>新加坡配套</button></a>
+				<a href="/accommodation"><button>泰国配套</button></a>
+				<a href="/accommodation"><button>印尼配套</button></a>
+				<a href="/accommodation"><button>台湾配套</button></a>
+				<a href="/accommodation"><button>中国配套</button></a>
+				<a href="/accommodation"><button>马代配套</button></a>
+			</div>
+		</div>
+		<div class="section">
+			<h3>文件处理区域</h3>
+			<div class="button-container">
+				<a href="/file_processing"><button>PDF处理</button></a>
+			</div>
+		</div>
+		<div class="section">
+			<h3>账单处理</h3>
+			<div class="button-container">
+				<a href="/accommodation"><button>UOB 银行账单</button></a>
+				<a href="/accommodation"><button>OCBC 银行账单</button></a>
+				<a href="/accommodation"><button>Athina 账单</button></a>
+			</div>
+		</div>
+		<div class="section">
+                <h3>测试区域</h3>
+                <div class="button-container">
+                    <a href="/my_test"><button>Test</button></a>
+                </div>
             </div>
-        </div>
 
-        <div class="section">
-            <h2>机票区域</h2>
-            <div class="button-container">
-                <a href="{{url_for('flight_routes.itinerary_conversion')}}"><button>机票行程简化</button></a>
-                <a href="{{url_for('flight_routes.flight_to_athina_page')}}"><button>机票订单Athina</button></a>
-                <a href="{{url_for('flight_routes.render_athina_page')}}"><button>机票常用订单</button></a>
-                <a href="{{url_for('flight_routes.render_athina_page')}}"><button>Athina一般订单</button></a>
-                <a href="{{url_for('flight_routes.enter_flight_information')}}"><button>添加航班信息</button></a>
-                <a href="{{url_for('flight_routes.enter_flight_information')}}"><button>酷航信息输入</button></a>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>配套区域</h2>
-            <div class="button-container">
-                <a href="/accommodation"><button>新加坡配套</button></a>
-                <a href="/accommodation"><button>泰国配套</button></a>
-                <a href="/accommodation"><button>印尼配套</button></a>
-                <a href="/accommodation"><button>台湾配套</button></a>
-                <a href="/accommodation"><button>中国配套</button></a>
-                <a href="/accommodation"><button>马代配套</button></a>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>文件处理区域</h2>
-            <div class="button-container">
-                <a href="/file_processing"><button>PDF处理</button></a>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>账单处理</h2>
-            <div class="button-container">
-                <a href="/accommodation"><button>UOB 银行账单</button></a>
-                <a href="/accommodation"><button>OCBC 银行账单</button></a>
-                <a href="/accommodation"><button>Athina 账单</button></a>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>测试区域</h2>
-            <div class="button-container">
-                <a href="/my_test"><button>Test</button></a>
-            </div>
-        </div>
     </div>
+	
+
+	
 </body>
+
 </html>
