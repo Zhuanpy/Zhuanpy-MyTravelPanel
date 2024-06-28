@@ -34,14 +34,18 @@
             <button onclick="removeInput(this)">删除</button>
         </div>
     </div>
-    <button onclick="addInput()">增加输入</button> <br /><br /><br /><br />
+    <button onclick="addInput()">增加输入</button>
 
-    <button onclick="sendData()">输出行程</button> <br /><br />
-    
     <h2>行程信息</h2>
     <textarea id="itinerary" readonly></textarea>
+    <br /><br />
+    <button onclick="sendData()">输出行程</button>
+
+    <a href="{{url_for('flight_routes.entry_flight_page') }}"><button > 录入航班信息 </button></a>
+    
 
     <script>
+
         function addInput() {
             const container = document.getElementById('inputContainer');
             const inputGroup = document.createElement('div');

@@ -2,6 +2,7 @@ import time
 import csv
 import os
 import pandas as pd
+import pymysql
 
 
 def get_times():
@@ -17,6 +18,13 @@ def get_times():
 
 class FlightData:
     flight_data_path = os.path.join("E:", "/WORKING", "A-AIR_TICKET", "01_FLIGHT")
+    # 数据库连接信息
+    db_config = {
+        'user': 'root',
+        'password': '651748264Zz*',
+        'host': 'localhost',
+        'database': 'traveldata'
+    }
 
     @classmethod
     def usual_flight_list(cls):
@@ -100,9 +108,33 @@ class FlightData:
 
         return result
 
+    @classmethod
+    def insert_flight(cls, airline: str, flight_number: str, origin: str, departure_time: str, ):
+
+        table_id = airline + flight_number
+        # print(table_id)
+        conn = pymysql.connect(**cls.db_config)
+        cursor = conn.cursor()
+
+        try:
+
+            insert_query = '''
+                INSERT INTO flight_timing_data (航班ID, 航司, 航班号, 起始城市, 起始时间)
+                VALUES (%s, %s, %s, %s, %s)
+                ON DUPLICATE KEY UPDATE
+                    航司 = VALUES(航司),
+                    航班号 = VALUES(航班号),
+                    起始城市 = VALUES(起始城市),
+                    起始时间 = VALUES(起始时间)
+            '''
+
+            cursor.execute(insert_query, (table_id, airline, flight_number, origin, departure_time))
+            conn.commit()
+
+        finally:
+            conn.close()
+
 
 if __name__ == '__main__':
-    num, flight, flight_date = "1", "TR189", "10JUN"
-    f = FlightData()
-    r = f.athina_booking_code(num, flight, flight_date)
-    print(r)
+    # 读取 Excel 文件
+    file_path = 'E:/WORKING/A-AIR_TICKET/01_FLIGHT/航班时刻表数据.xls'

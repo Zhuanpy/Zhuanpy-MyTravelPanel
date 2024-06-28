@@ -73,8 +73,8 @@ def results_athina_page():
     # 将选择内容处理想要的结果
     flight_inform = request.form['flight-info']
     flight_date = request.form['date-info']
-    print(flight_inform)
-    print(flight_date)
+    # print(flight_inform)
+    # print(flight_date)
 
     flight_index = request.form['flight-info']
     airline_code = request.form['flight-info']
@@ -129,6 +129,26 @@ def submit_flight_information():
     flight.add_flight_to_csv(csv_file, flight_data)
 
     return render_template('flights/results.html', text="Flight information added successfully!")
+
+
+@fb.route('/flightEntryPage')
+def entry_flight_page():
+    return render_template('flights/flight_timing_entry.html')
+
+
+@fb.route('/entryFlightSubmit', methods=['POST'])
+def entry_flight_processing():
+    air_number = request.form['flight_number']
+    air_number = air_number.replace(' ', '')
+    airline = air_number[:2]
+    flight_number = air_number[2:]
+
+    origin = request.form['origin']
+    departure_time = request.form['departure_time']
+    print(f"airline:{airline}, flight_number:{flight_number}, origin:{origin}, departure_time:{departure_time}")
+    flight.insert_flight(airline, flight_number, origin, departure_time)
+
+    return '新记录插入成功'
 
 
 if __name__ == '__main__':

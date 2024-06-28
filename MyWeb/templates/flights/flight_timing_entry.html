@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>录入航班信息</title>
+</head>
+
+<body>
+    <h1>录入航班信息</h1>
+
+    <form action="{{url_for('flight_routes.entry_flight_processing') }}" method="POST">
+
+        <label for="flight_number">航班号:</label>
+        <input type="text" id="flight_number" name="flight_number" placeholder="例如: TR100" required><br><br>
+
+        <label for="origin">航班起始地点:</label>
+        <input type="text" id="origin" name="origin" placeholder="例如: SIN CAN" required><br><br>
+
+        <label for="departure_time">航班起始时间:</label>
+        <input type="text" id="departure_time" name="departure_time" placeholder="例如: 0515 0925" required><br><br>
+
+        <input type="submit" value="提交">
+
+    </form>
+</body>
+</html>
