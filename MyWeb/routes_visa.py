@@ -81,6 +81,12 @@ def visa_China():
     return render_template('visas/China_visa.html')
 
 
+@bp.route('/visaChinaProcessing', methods=['GET', 'POST'])
+def visa_China_processing():
+
+    return render_template('visas/China_visa.html')
+
+
 @bp.route('/visaAustralia', methods=['GET', 'POST'])
 def visa_Australia():
     return render_template('visas/Australia_visa.html')

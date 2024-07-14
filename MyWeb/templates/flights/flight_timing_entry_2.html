@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>录入航班信息</title>
+    <style>
+		.keyin_inform {
+				display: flex;
+				align-items: center;
+			}
+			.keyin_inform > div {
+				margin-right: 20px;
+			}
+			label {
+				margin-right: 5px;
+			}
+			button {
+				padding: 6px 12px;
+			}
+        #flight-list li {
+            display: flex;
+            align-items: center;
+        }
+        #flight-list li button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>录入航班信息</h1>
+	
+    <form id="flight-form" action="{{ url_for('flight_routes.submit_flights') }}" method="POST">
+        
+		<div class = "keyin_inform">
+			<div>
+			    <label for="flight_number">航班号:</label>
+			    <input type="text" id="flight_number" name="flight_number" placeholder="例如: TR100" required>
+			</div>
+			<div>
+			    <label for="origin">起始地点:</label>
+			    <input type="text" id="origin" name="origin" placeholder="例如: SIN CAN" required>
+			</div>
+			<div>
+			    <label for="departure_time">起始时间:</label>
+			    <input type="text" id="departure_time" name="departure_time" placeholder="例如: 0515 0925" required>
+			</div>
+			<button type="button" id="add-flight">添加航班</button>
+			
+		</div>
+		
+		
+        <ul id="flight-list"></ul>
+		
+        <input type="submit" value="提交">
+		
+    </form>
+
+    <script>
+        document.getElementById('add-flight').addEventListener('click', function() {
+            
+			const flightNumber = document.getElementById('flight_number').value;
+            const origin = document.getElementById('origin').value;
+            const departureTime = document.getElementById('departure_time').value;
+
+            if (flightNumber && origin && departureTime) {
+                const li = document.createElement('li');
+                li.innerHTML = `航班号: ${flightNumber}  起始地点: ${origin}  起始时间: ${departureTime} <button type="button" class="remove-flight">删除</button>`;
+                document.getElementById('flight-list').appendChild(li);
+
+                li.querySelector('.remove-flight').addEventListener('click', function() {
+                    li.remove();
+                });
+
+                document.getElementById('flight_number').value = '';
+                document.getElementById('origin').value = '';
+                document.getElementById('departure_time').value = '';
+            }
+        });
+
+        document.getElementById('flight-form').addEventListener('submit', function(event) {
+            const flights = [];
+            document.querySelectorAll('#flight-list li').forEach(li => {
+                const [flightNumber, origin, departureTime] = li.textContent.replace(' 删除', '').split(' - ');
+                flights.push({ flightNumber, origin, departureTime });
+            });
+
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'flights';
+            hiddenInput.value = JSON.stringify(flights);
+            this.appendChild(hiddenInput);
+        });
+    </script>
+</body>
+</html>
