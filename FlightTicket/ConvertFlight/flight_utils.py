@@ -1,4 +1,3 @@
-from sqlalchemy import create_engine
 import pymysql
 import requests
 from bs4 import BeautifulSoup
@@ -7,31 +6,17 @@ import time
 
 
 class MysqlTravelData:
-    user = 'root'
-    host = 'localhost'
-    passwords = '651748264Zz*'
-    database = 'traveldata'
 
-    @classmethod
-    def engine(cls):
-        # 替换为你的数据库连接信息
-        db_host = cls.host
-        db_user = cls.user
-        db_password = cls.passwords
-        db_name = cls.database
-
-        # 创建数据库连接引擎
-        engine = create_engine(f'mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}')
-
-        return engine
+    db_config = {
+        'user': 'root',
+        'password': '651748264Zz*',
+        'host': 'localhost',
+        'database': 'traveldata'
+    }
 
     @classmethod
     def connection(cls):
-        connection = pymysql.connect(host=cls.host,
-                                     user=cls.user,
-                                     password=cls.passwords,
-                                     database=cls.database,
-                                     charset='utf8mb4')
+        connection = pymysql.connect(**cls.db_config)
         return connection
 
 

@@ -98,6 +98,7 @@ class OriginalStatement:
         checked_path = os.path.join(self.file_path, "原始下载", "Keywords", "checked_date.txt")
         with open(checked_path, 'r', encoding='utf-8') as file:
             checked_date = file.read()
+
         original = original[original["T-Date"] > pd.to_datetime(checked_date)]
 
         # 提取 & 添加关键字列
@@ -106,6 +107,7 @@ class OriginalStatement:
         """ 筛选数据 """
         previous_path = os.path.join(self.file_path, "整理下载", "整理下载.xls")
         previous = pd.read_excel(previous_path, sheet_name="Sheet1", engine='openpyxl')
+
         previous["T-Date"] = pd.to_datetime(previous["T-Date"]).dt.date
         previous["Credit date"] = pd.to_datetime(previous["Credit date"]).dt.date
 
@@ -113,24 +115,23 @@ class OriginalStatement:
 
         if latest_statement.empty:
             logging.warning("无最整理账单；")
+            return latest_statement
 
-        else:
+        """ 找出已核查日期并 保存 """
+        checked_date = latest_statement['T-Date'].drop_duplicates().tolist()
 
-            """ 找出已核查日期并 保存 """
-            checked_date = latest_statement['T-Date'].drop_duplicates().tolist()
+        if len(checked_date) >= 2:
+            # 获取并保存 倒数第二个值
+            checked_date = checked_date[-2]
+            checked_date = checked_date.isoformat()
 
-            if len(checked_date) >= 2:
-                # 获取并保存 倒数第二个值
-                checked_date = checked_date[-2]
-                checked_date = checked_date.isoformat()
+            checked_path = os.path.join(self.file_path, "原始下载", "Keywords", "checked_date.txt")
+            with open(checked_path, 'w', encoding='utf-8') as file:
+                file.write(checked_date)
 
-                checked_path = os.path.join(self.file_path, "原始下载", "Keywords", "checked_date.txt")
-                with open(checked_path, 'w', encoding='utf-8') as file:
-                    file.write(checked_date)
-
-            """ 保存最新的整理账单"""
-            latest_statement = pd.concat([previous, latest_statement])
-            latest_statement.to_excel(previous_path, index=False, engine='openpyxl')
+        """ 保存最新的整理账单"""
+        latest_statement = pd.concat([previous, latest_statement])
+        latest_statement.to_excel(previous_path, index=False, engine='openpyxl')
 
         return latest_statement
 
@@ -140,7 +141,7 @@ class OriginalStatement:
         latest_path = os.path.join(self.file_path, "整理下载", "整理下载.xls")
         statement = pd.read_excel(latest_path, sheet_name="Sheet1", engine='openpyxl')
 
-        statement = statement[(statement["EO"] != "Na") &
+        statement = statement[(statement["EO"] != "/") &
                               (statement["User"] == "COM") &
                               (~statement["EO"].isnull())]
 
@@ -174,7 +175,7 @@ class OriginalStatement:
         statement["T-Date"] = pd.to_datetime(statement["T-Date"]).dt.date
         statement["Credit date"] = pd.to_datetime(statement["Credit date"]).dt.date
 
-        statement = statement[(statement["EO"] == "Na") &
+        statement = statement[(statement["EO"] == "/") &
                               (statement["User"] != "COM") &
                               (~statement["EO"].isnull())]
 
@@ -208,15 +209,15 @@ class OriginalStatement:
 
         if latest_statement.empty:
             logging.warning("无最新公司账单;")
+            return latest_statement
 
-        else:
-            latest_statement = latest_statement[["T-Date", "Credit date", "EO", "Withdrawal", "Description"]]
-            latest_statement["status"] = "pending"
-            latest_statement = pd.concat([to_company_statement, latest_statement])
-            latest_statement["T-Date"] = latest_statement["T-Date"].dt.date
-            latest_statement["Credit date"] = latest_statement["Credit date"].dt.date
+        latest_statement = latest_statement[["T-Date", "Credit date", "EO", "Withdrawal", "Description"]]
+        latest_statement["status"] = "pending"
+        latest_statement = pd.concat([to_company_statement, latest_statement])
+        latest_statement["T-Date"] = latest_statement["T-Date"].dt.date
+        latest_statement["Credit date"] = latest_statement["Credit date"].dt.date
 
-            latest_statement.to_excel(to_path, index=False, engine='openpyxl')
+        latest_statement.to_excel(to_path, index=False, engine='openpyxl')
 
         return latest_statement
 
@@ -230,7 +231,7 @@ class OriginalStatement:
 
         if statement.empty:
             logging.warning("To boss 无最新账单;")
-            return True
+            return statement
 
         statement["T-Date"] = statement["T-Date"].dt.date
         statement["Credit date"] = statement["Credit date"].dt.date
