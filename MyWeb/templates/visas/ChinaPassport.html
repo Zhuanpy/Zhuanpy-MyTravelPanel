@@ -5,15 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中国签证处理</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/visa_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/visa_style.css') }}">
+	
 </head>
 
 <body>
     <div class="center">
-        <h1>中国签证处理</h1>
-        <form method="post" action="{{url_for('visa_routes.visa_China_processing')}}">
+        <h1>中国护照处理</h1>
+        <form method="post" action="{{ url_for('visa_routes.visa_ChinaPassport_processing') }}">
             <label for="path_create_project">项目名称：</label>
-            <input type="text" id="path_create_project" name="path_create_project" placeholder="如：HID123_LI JIAN" required>
+            <input type="text" id="path_create_project" name="path_create_project" placeholder="如：HID123_LI JIAN">
             <button type="submit" name="submit_button" value="create_project">确认创建</button>
         </form>
     </div>

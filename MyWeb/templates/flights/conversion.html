@@ -4,65 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>机票行程转化</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
-            padding-left: 80px;
-            padding-right: 80px;
-        }
-
-        .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* 水平居中对齐 */
+            align-items: center; /* 垂直居中对齐 */
+            min-height: 100vh; /* 确保页面高度覆盖视口 */
+            margin: 0;
+            background-color: #f0f4f8; /* 背景颜色 */
         }
-
-        .input-container, .output-container {
-            flex-basis: 49%;
-            margin-top: 10px;
+        .form-container {
+            width: 80%; /* 设置容器宽度为80% */
+            background-color: #fff; /* 设置容器背景颜色 */
+            padding: 1.5rem; /* 设置容器内边距 */
+            border-radius: 0.5rem; /* 设置容器圆角 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 设置容器阴影 */
         }
-
-        textarea {
-            height: 20em;
-            width: 100%;
+        .section {
+            margin-bottom: 1.5rem; /* 设置底部间距 */
         }
-
-        input[type="text"] {
-            width: calc(100% - 4px);
-            margin-bottom: 20px;
+        .input-bg {
+            background-color: #f9fafb; /* 添加背景颜色 */
+        }
+        textarea, input[type="text"] {
+            width: 100%; /* 设置输入框宽度为100% */
+        }
+        .flex-row {
+            display: flex;
+            gap: 1.5rem; /* 设置元素间的间距 */
+        }
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
     </style>
 </head>
 <body>
-    <h2>机票行程转化</h2>
-
-    <form action="{{ url_for('flight_routes.itinerary_convert_process') }}" method="post">
-
-        <div class="container">
-
-            <div class="input-container">
-                <label for="input_text">输入行程：</label><br><br>
-                <textarea id="input_text" name="input_text" rows="10">{{ request.form['input_text'] }}</textarea><br><br>
-
-                <label for="luggage">行李：</label>
-                <input type="text" id="luggage" name="luggage" style="width: 30%;" value="{{ request.form['luggage'] }}">
-                <br>
-                <label for="price">价格：</label>
-                <input type="text" id="price" name="price" style="width: 30%;" value="{{ request.form['price'] }}">
+    <div class="form-container">
+        <h2 class="text-center text-2xl font-bold mb-6">机票行程转化</h2> <br /><br />
+		
+        <form action="{{ url_for('flight_routes.itinerary_convert_process') }}" method="post">
+            <div class="flex-row section">
+                <div class="flex-col input-section">
+                    <label for="input_text" class="block font-medium mb-2">输入行程：</label>
+                    <textarea id="input_text" name="input_text" rows="10" class="border rounded p-2 input-bg">{{ request.form['input_text'] }}</textarea>
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <div class="flex flex-col">
+                            <label for="luggage" class="block font-medium mb-1">行李：</label>
+                            <input type="text" id="luggage" name="luggage" class="border rounded p-2 input-bg" value="{{ request.form['luggage'] }}">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="price" class="block font-medium mb-1">价格：</label>
+                            <input type="text" id="price" name="price" class="border rounded p-2 input-bg" value="{{ request.form['price'] }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-col output-section">
+                    <label for="output_text" class="block font-medium mb-2">输出行程：</label>
+                    <textarea id="output_text" name="output_text" rows="10" class="border rounded p-2 input-bg">{{ output_text }}</textarea>
+                </div>
             </div>
-
-            <div class="output-container">
-                <label for="output_text">输出行程：</label><br><br>
-                <textarea id="output_text" name="output_text" rows="10">{{ output_text }}</textarea><br><br>
+            <div class="section language-selection">
+                <div class="flex items-center mb-4">
+                    <input type="radio" id="chinese" name="language" value="chinese" checked class="mr-2">
+                    <label for="chinese" class="mr-4">中文行程</label>
+                    <input type="radio" id="english" name="language" value="english" class="mr-2">
+                    <label for="english">English itinerary</label>
+                </div>
             </div>
-
-        </div>
-
-        <input type="radio" id="chinese" name="language" value="chinese" checked>
-        <label for="chinese">中文行程</label>
-        <input type="radio" id="english" name="language" value="english">
-        <label for="english">English itinerary</label><br><br>
-
-        <input type="submit" value="开始转换"> <br><br>
-
-    </form>
+            <div class="section submit-section flex justify-between">
+                <input type="submit" value="开始转换" class="bg-blue-500 text-white rounded p-2 cursor-pointer">
+            </div>
+        </form>
+    </div>
 </body>
 </html>

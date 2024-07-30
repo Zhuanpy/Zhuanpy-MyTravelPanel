@@ -1,24 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML 示例</title>
+    <title>倒计时示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #countdown {
+            font-size: 2em;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>This is a simple HTML page.</p>
-    <form action="/submit" method="post">
-        <label for="file_path_a">File Path A:</label>
-        <input type="text" id="file_path_a" name="file_path_a"><br><br>
-        <button type="submit" name="submit_button" value="submit_a">Submit A</button>
-    </form>
-    <br>
-    <br>
-    <form action="/submit" method="post">
-        <label for="file_path_b">File Path B:</label>
-        <input type="text" id="file_path_b" name="file_path_b"><br><br>
-        <button type="submit" name="submit_button" value="submit_b">Submit B</button>
-    </form>
+    <!-- 倒计时显示区域 -->
+    <div id="countdown">倒计时：00:00:00</div>
+
+    <script>
+        // 设置倒计时时间（以秒为单位）
+        let countdownTime = 360; // 1小时
+
+        // 获取倒计时显示区域的DOM元素
+        const countdownElement = document.getElementById('countdown');
+
+        // 更新倒计时显示的函数
+        function updateCountdown() {
+            // 计算剩余的小时、分钟和秒
+            const hours = Math.floor(countdownTime / 3600);
+            const minutes = Math.floor((countdownTime % 3600) / 60);
+            const seconds = countdownTime % 60;
+
+            // 格式化倒计时显示
+            countdownElement.textContent = `倒计时：${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // 倒计时结束时停止
+            if (countdownTime > 0) {
+                countdownTime--;
+            } else {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = '倒计时结束';
+            }
+        }
+
+        // 每秒更新一次倒计时显示
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>

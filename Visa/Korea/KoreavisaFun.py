@@ -1,35 +1,41 @@
 import pandas as pd
 from PIL import Image, ImageDraw, ImageFont
-from Filefloder import CreateVisaProgram as Program
 import os
-import time
 
 
 class KoreaVisa:
-    folder_title = "Korea_vsia"
-    working_path = Program.working_folder
 
     @classmethod
     def combine_JPG2Pdf(cls, folderPath: str, pdfFilePath: str):
+        """
+        将指定文件夹中的图片合并为 PDF 文件。
 
-        folderPath = os.path.join(folderPath, "temp")  # /'
+        :param folderPath: 包含图片的文件夹路径
+        :param pdfFilePath: 生成的 PDF 文件路径
 
-        pdfFilePath = f'{pdfFilePath}/my_form.pdf'
+        """
 
+        # 设定输出 PDF 文件路径
+        pdfFilePath = os.path.join(pdfFilePath, 'my_visa_form.pdf')
+
+        # 获取文件夹中的所有文件
         files = os.listdir(folderPath)
         pngFiles = []
         sources = []
 
-        THRESHOLD_VALUE = 0  # 设定不转化的图片
+        THRESHOLD_VALUE = 0  # 设定不转化的图片的阈值
         for file in files:
-
+            # 筛选出图片文件
             if any(ext in file.lower() for ext in ['jpg', 'png', 'jpeg', 'webp']):
                 filename = os.path.splitext(file)[0]
 
                 try:
+                    # 判断文件名是否为大于阈值的数字
                     if int(filename) > THRESHOLD_VALUE:
                         pngFiles.append(os.path.join(folderPath, file))
+
                 except ValueError:
+                    # 如果文件名不是数字，直接添加
                     pngFiles.append(os.path.join(folderPath, file))
 
         pngFiles.sort()
@@ -39,65 +45,61 @@ class KoreaVisa:
         for file in pngFiles:
 
             pngFile = Image.open(file)
-
+            # 确保图片模式为 RGB
             if pngFile.mode == "RGB":
                 pngFile = pngFile.convert("RGB")
 
             sources.append(pngFile)
 
+        # 保存为 PDF 文件
         output.save(pdfFilePath, "pdf", save_all=True, append_images=sources)
 
     @classmethod
-    def create_visa_folder(cls, file_name: str):
-
-        # 项目资源文件夹
-        source_folder = os.path.join(Program.visa_requirements_folder, '01_Korea_visa', "visa_form")
-
-        # 项目目标文件夹
-        name = f'Korea_visa_{file_name}'
-        destination_folder = os.path.join(Program.working_folder, name)
-
-        Program.copy_folder_contents(source_folder, destination_folder)
-
-    @classmethod
     def fill_form(cls, folder: str):
+        """
+        根据提供的表格信息填充表单，并生成对应的图片和 PDF 文件。
 
-        destination_folder_name = f'{cls.folder_title}_{folder}'
+        :param folder: 目标文件夹名称
 
-        destination_file_path = os.path.join(cls.working_path, destination_folder_name)
+        """
+        folder_title = "Korea_Visa"
+        base_path = r'E:\WORKING\A-AIR_TICKET'
 
-        source_path = os.path.join(cls.working_path, "01_Visa", "VisaDocumentRequirements", "01_Korea_vsia")
+        form_folder = f'{folder_title}_{folder}'
+        form_path = os.path.join(base_path, form_folder)
+        form_temp_path = os.path.join(form_path, "temp")
+
+        source_path = os.path.join(base_path, "01_Visa", "VisaDocumentRequirements", "01_Korea_visa", "source")
 
         for p in range(1, 6):
 
             page = f'PAGE0{p}'
-
-            """ 读取坐标信息 """
-            loc_list = pd.read_excel(f'{source_path}/坐标列表.xls', sheet_name='Sheet1')
-
+            loc_file = os.path.join(source_path, "坐标列表.xls")
+            # 读取坐标信息
+            loc_list = pd.read_excel(loc_file, sheet_name='Sheet1')
             loc_list = loc_list[loc_list['PAGE'] == page]
             loc_list[["坐标序列"]] = loc_list[["坐标序列"]].astype(str)
             loc_list[["坐标X", "坐标Y"]] = loc_list[["坐标X", "坐标Y"]].astype(int)
 
-            """  清理填写表格信息 """
-            form = pd.read_excel(f'{destination_file_path}/FormSample.xls', sheet_name='Sheet1')
-
+            # 清理填写表格信息
+            form_sample = os.path.join(form_path, "FormSample.xls")
+            form = pd.read_excel(form_sample, sheet_name='Sheet1')
             form = form[form['PAGE'] == page]
             form = form[~(form['DETAIL'].isnull())]
-
-            # form['PAGE'] = form['序列'].astype(int)
             form[["坐标序列", "DETAIL"]] = form[["坐标序列", "DETAIL"]].astype(str)
 
-            image_path = f'{source_path}/Form-page-{p}.jpg'
+            # 打开图片并创建绘图对象
+            image_name = f"Form-page-{p}.jpg"
+            image_path = os.path.join(source_path, image_name)
             image = Image.open(image_path)
-            # 创建一个Draw对象
             draw = ImageDraw.Draw(image)
-            # 选择字体,字号,颜色
+
+            # 设置字体、字号和颜色
             font = ImageFont.truetype("simsun.ttc", 50)  # 楷体字体文件
-            text_color = (0, 0, 255)  # # 选择文字颜色
+            text_color = (0, 0, 255)  # 文字颜色
 
             for i in form.index:
-                filling_texts = form.loc[i, 'DETAIL']  # str(form.loc[i, 'DETAIL'])
+                filling_texts = form.loc[i, 'DETAIL']
                 form_type = form.loc[i, '类型']
                 filling_Number = form.loc[i, '坐标序列']
 
@@ -111,10 +113,10 @@ class KoreaVisa:
                 text_position = (x, y)
                 draw.text(text_position, filling_texts, font=font, fill=text_color)
 
-            out_path = f'{destination_file_path}/temp/{page}.jpg'
-            image.save(out_path)
+            image_name = f"{page}.jpg"
+            image.save(f"{form_temp_path}/{image_name}")
 
-        cls.combine_JPG2Pdf(destination_file_path, destination_file_path)
+        cls.combine_JPG2Pdf(form_temp_path, form_path)
 
 
 if __name__ == '__main__':

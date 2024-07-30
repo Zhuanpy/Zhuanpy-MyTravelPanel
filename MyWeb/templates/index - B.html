@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>工作界面</title>
+
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+		<style>
+			.container {
+				width: 60%;
+				margin: 0 auto;
+			}
+
+			.btn {
+				@apply px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg border border-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out;
+			}
+
+			.btn-secondary {
+				@apply px-6 py-3 text-lg font-medium text-white bg-green-600 rounded-lg border border-green-600 hover:bg-green-700 transition duration-300 ease-in-out;
+			}
+
+			.section {
+				@apply border-2 border-gray-500 p-6 rounded-lg;
+			}
+
+			.content-box {
+				@apply border border-gray-300 p-4 rounded-lg;
+			}
+		</style>
+	</head>
+	<body class="font-sans antialiased bg-gray-100">
+
+		<div class="container mx-auto p-6">
+			<div class="text-center mb-8">
+				<h1 class="text-4xl font-bold text-gray-900">工作界面</h1>
+			</div>
+
+			<div class="mb-8 section">
+				<h3 class="text-2xl font-semibold text-gray-900 mb-6">签证区域</h3>
+				<div class="content-box" >
+					<div class="flex flex-wrap gap-6 justify-start" id="visa-links">
+
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-8 section">
+				<h3 class="text-2xl font-semibold text-gray-900 mb-6">机票区域</h3>
+				<div class="content-box">
+					<div class="flex flex-wrap gap-6">
+						<a href="{{url_for('flight_routes.itinerary_conversion')}}" class="btn">机票行程简化</a>
+						<a href="{{url_for('flight_routes.flight_to_athina_page')}}" class="btn">机票订单Athina</a>
+						<a href="{{url_for('flight_routes.render_athina_page')}}" class="btn">机票常用订单</a>
+						<a href="{{url_for('flight_routes.render_athina_page')}}" class="btn">Athina一般订单</a>
+						<a href="{{url_for('flight_routes.enter_flight_information')}}" class="btn">添加航班信息</a>
+						<a href="{{url_for('flight_routes.enter_flight_information')}}" class="btn">酷航信息输入</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-8 section">
+				<h3 class="text-2xl font-semibold text-gray-900 mb-6">配套区域</h3>
+				<div class="content-box">
+					<div class="flex flex-wrap gap-6">
+						<a href="/accommodation" class="btn">新加坡配套</a>
+						<a href="/accommodation" class="btn">泰国配套</a>
+						<a href="/accommodation" class="btn">印尼配套</a>
+						<a href="/accommodation" class="btn">台湾配套</a>
+						<a href="/accommodation" class="btn">中国配套</a>
+						<a href="/accommodation" class="btn">马代配套</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-8 section">
+				<h3 class="text-2xl font-semibold text-gray-900 mb-6">文件处理区域</h3>
+				<div class="content-box">
+					<div class="flex flex-wrap gap-6">
+						<a href="/file_processing" class="btn">PDF处理</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-8 section">
+				<h3 class="text-2xl font-semibold text-gray-900 mb-6">账单处理</h3>
+				<div class="content-box">
+					<div class="flex flex-wrap gap-6">
+						<a href="/accommodation" class="btn">UOB 银行账单</a>
+						<a href="/accommodation" class="btn">OCBC 银行账单</a>
+						<a href="/accommodation" class="btn">Athina 账单</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="mb-8 section">
+				<h3 class="text-2xl font-semibold text-gray-900 mb-6">测试区域</h3>
+				<div class="content-box">
+					<div class="flex flex-wrap gap-6">
+						<a href="/my_test" class="btn-secondary">Test</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script>
+		
+		document.addEventListener("DOMContentLoaded", () => {
+			const visaLinks = [
+				{ route: 'visa_Korea', text: '韩国签证' },
+				{ route: 'visa_Japan', text: '日本签证' },
+				{ route: 'visa_Us', text: '美国签证' },
+				{ route: 'visa_China', text: '中国签证办理' },
+				{ route: 'visa_NewZealand', text: '中国护照办理' },
+				{ route: 'visa_Taiwan', text: '台湾签证' },
+				{ route: 'visa_Australia', text: '澳洲签证' },
+				{ route: 'visa_Malaysia', text: '马来签证' },
+				{ route: 'visa_Uk', text: '英国签证' },
+				{ route: 'visa_NewZealand', text: '新西兰签证' },
+			];
+
+			const visaContainer = document.getElementById("visa-links");
+			
+			visaLinks.forEach(link => {
+				const a = document.createElement("a");
+				a.href = `{{url_for('visa_routes.${link.route}')}}`;
+				a.className = "btn";
+				a.textContent = link.text;
+				visaContainer.appendChild(a);
+			});
+		});
+
+	</script>
+	
+</html>

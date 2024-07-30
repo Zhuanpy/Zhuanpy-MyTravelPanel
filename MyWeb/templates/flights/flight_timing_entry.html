@@ -1,26 +1,86 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>录入航班信息</title>
+  <title>录入航班信息</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const flightContainer = document.querySelector('.flight-container');
+      const addFlightButton = document.querySelector('#addFlightButton');
+      const submitButton = document.querySelector('#submitButton');
+      
+      addFlightButton.addEventListener('click', function() {
+        const flightFormHTML = `
+          <div class="grid grid-cols-12 gap-4 items-center flight-entry">
+            <div class="col-span-3">
+              <label class="block font-medium">航班号:</label>
+              <input type="text" name="flightNumber[]" placeholder="例如: TR100" class="w-full border rounded p-2">
+            </div>
+            <div class="col-span-4">
+              <label class="block font-medium">起始地点:</label>
+              <input type="text" name="origin[]" placeholder="例如: SIN CAN" class="w-full border rounded p-2">
+            </div>
+            <div class="col-span-3">
+              <label class="block font-medium">起始时间:</label>
+              <input type="text" name="departureTime[]" placeholder="例如: 0515 0925" class="w-full border rounded p-2">
+            </div>
+            <div class="col-span-2">
+              <button type="button" class="w-full bg-red-500 text-white rounded p-2 flight-delete-button">删除航班信息</button>
+            </div>
+          </div>
+        `;
+        flightContainer.insertAdjacentHTML('beforeend', flightFormHTML);
+        initializeDeleteButtons();
+      });
+
+      function initializeDeleteButtons() {
+        document.querySelectorAll('.flight-delete-button').forEach(button => {
+          button.removeEventListener('click', handleFlightDelete);
+          button.addEventListener('click', handleFlightDelete);
+        });
+      }
+
+      function handleFlightDelete(event) {
+        event.target.closest('.flight-entry').remove();
+      }
+
+      initializeDeleteButtons();
+    });
+  </script>
 </head>
-
-<body>
-    <h1>录入航班信息</h1>
-
-    <form action="{{url_for('flight_routes.entry_flight_processing') }}" method="POST">
-
-        <label for="flight_number">航班号:</label>
-        <input type="text" id="flight_number" name="flight_number" placeholder="例如: TR100" required><br><br>
-
-        <label for="origin">起始地点:</label>
-        <input type="text" id="origin" name="origin" placeholder="例如: SIN CAN" required><br><br>
-
-        <label for="departure_time">起始时间:</label>
-        <input type="text" id="departure_time" name="departure_time" placeholder="例如: 0515 0925" required><br><br>
-
-        <input type="submit" value="提交">
-
-    </form>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-6">
+    <h1 class="text-center text-2xl font-bold mb-6">录入航班信息</h1>
+    <div class="bg-white p-6 rounded shadow-md">
+      <h2 class="text-lg font-semibold mb-4">输入航班信息</h2>
+	  
+      <form id="flightForm" method="POST" action="{{ url_for('flight_routes.entry_flight_processing') }}">
+        <div class="flight-container space-y-4">
+          <div class="grid grid-cols-12 gap-4 items-center flight-entry">
+            <div class="col-span-3">
+              <label class="block font-medium">航班号:</label>
+              <input type="text" name="flightNumber[]" placeholder="例如: TR100" class="w-full border rounded p-2">
+            </div>
+            <div class="col-span-4">
+              <label class="block font-medium">起始地点:</label>
+              <input type="text" name="origin[]" placeholder="例如: SIN CAN" class="w-full border rounded p-2">
+            </div>
+            <div class="col-span-3">
+              <label class="block font-medium">起始时间:</label>
+              <input type="text" name="departureTime[]" placeholder="例如: 0515 0925" class="w-full border rounded p-2">
+            </div>
+            <div class="col-span-2">
+              <button type="button" class="w-full bg-red-500 text-white rounded p-2 flight-delete-button">删除航班信息</button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 flex justify-between">
+          <button type="button" id="addFlightButton" class="bg-blue-500 text-white rounded p-2">添加航班信息</button>
+          <button type="submit" id="submitButton" class="bg-green-500 text-white rounded p-2">提交</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>

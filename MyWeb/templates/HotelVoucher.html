@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酒店入住单（HOTEL VOUCHER）</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script> <!-- 引入xlsx库，用于处理Excel文件 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {text-align: center;
+            font-size: 22px; /* 调整h1的字号 */
+        }
+        h2 {text-align: left;
+            font-size: 15px; /* 调整h2的字号 */
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+            font-size: 12px; /* 设置标签字体大小 */
+        }
+        .data {
+            display: inline-block;
+            font-size: 12px; /* 设置数据字体大小 */
+            word-wrap: break-word; /* 允许长单词或 URL 自动换行 */
+            word-break: break-word; /* 处理长单词自动换行 */
+            overflow-wrap: break-word; /* 兼容性强的自动换行 */
+            max-width: 100%; /* 确保内容不超出容器 */
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 20px 0;
+        }
+		.header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.logo {
+			width: 125px;
+			height: 125px;
+		}
+		.logo img {
+			width: 100%;
+			height: 100%;
+		}
+		.info {
+			flex-basis: 50%; /* 占据40%的宽度 */
+		}
+		.company_name {
+			font-weight: bold;
+			font-size: 20px;
+			line-height: 0%;
+			margin-top: 5px; /* 段落顶部外边距 */
+			margin-bottom: 5px; /* 段落底部外边距 */
+		}
+		.company_info {
+			font-size: 12px;
+			line-height: 150%;
+		}
+		.company_info p {
+			margin-top: 5px; /* 段落顶部外边距 */
+			margin-bottom: 5px; /* 段落底部外边距 */
+		}
+    </style>
+</head>
+<body>
+	<div class="header">
+		<div class="logo">
+			<img src="company_logo.jpg" alt="公司Logo"> <!-- 替换为实际的公司logo图片路径 -->
+		</div>
+		<div class="info">
+			<div class="company_name"> 
+				<p>LEGEND TRAVEL PTE LTD</p> <!-- 替换为实际的公司名字 -->
+			</div>
+			<div class="company_info">             
+				<p>Address: 1 Park Road #02-K74, People's Park Complex, Singapore 059108</p> <!-- 替换为实际的公司地址 -->
+				<p>Email: legendtravel.director@gmail.com</p> <!-- 替换为实际的公司电话 -->
+				<p>Tel: (65) 64389986</p> <!-- 替换为实际的公司电话 -->
+			</div>
+		</div>
+	</div>
+	<hr>
+    <h1>酒店入住单（HOTEL VOUCHER）</h1> <!-- 页面主标题 -->
+    <br />
+	
+    <div class="section">
+        <h2>酒店确认号（Hotel Confirmation Code）</h2> <!-- 酒店确认号部分标题 -->
+        <p><span class="label">确认号:</span> <span class="data" id="confirmation-code"></span></p> <!-- 显示酒店确认号 -->
+    </div>
+    <hr> <!-- 添加分隔线 -->
+    <div class="section">
+        <h2>酒店信息（Hotel Information）</h2> <!-- 酒店信息部分标题 -->
+        <p><span class="label">酒店名字:</span> <span class="data" id="hotel-name"></span></p> <!-- 显示酒店名字 -->
+        <p><span class="label">地址:</span> <span class="data" id="hotel-address"></span></p> <!-- 显示酒店地址 -->
+        <p><span class="label">电话:</span> <span class="data" id="hotel-phone"></span></p> <!-- 显示酒店电话 -->
+    </div>
+    <hr> <!-- 添加分隔线 -->
+    <div class="section">
+        <h2>订单信息（Order Information）</h2> <!-- 订单信息部分标题 -->
+        <p><span class="label">入住日期:</span> <span class="data" id="checkin-date"></span></p> <!-- 显示入住日期 -->
+        <p><span class="label">退房日期:</span> <span class="data" id="checkout-date"></span></p> <!-- 显示退房日期 -->
+        <p><span class="label">房间数:</span> <span class="data" id="room-count"></span></p> <!-- 显示房间数 -->
+        <p><span class="label">房型:</span> <span class="data" id="room-type"></span></p> <!-- 显示房型 -->
+        <p><span class="label">入住人姓名:</span> <span class="data" id="guest-name"></span></p> <!-- 显示入住人姓名 -->
+        <p><span class="label">人数:</span> <span class="data" id="guest-count"></span></p> <!-- 显示人数 -->
+        <p><span class="label">餐型:</span> <span class="data" id="meal-plan"></span></p> <!-- 显示餐型 -->
+    </div>
+	<hr> <!-- 添加分隔线 -->
+	<div class="section">
+	    <h2>温馨提示</h2>
+	    <pre id="notice-content" class="data"></pre> <!-- 显示温馨提示内容 -->
+	</div>
+	<hr>
+	<input type="file" id="file-input" /> <!-- 文件上传输入框 -->
+    
+    <script>
+        // 将Excel日期转换为YYYY-MM-DD格式
+               // 将Excel日期转换为YYYY-MM-DD格式
+               function formatDate(excelDate) {
+                   if (isNaN(excelDate)) return '日期格式错误'; // 如果输入不是有效的日期，返回错误提示
+                   const date = new Date(Math.round((excelDate - 25569) * 86400 * 1000)); // 将Excel日期转换为JavaScript日期
+                   const year = date.getFullYear();
+                   const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份需要加1，因为JavaScript月份是从0开始的
+                   const day = date.getDate().toString().padStart(2, '0'); // 天数需要补零
+                   return `${year}-${month}-${day}`; // 返回YYYY-MM-DD格式的日期
+               }
+       
+               // 监听文件输入框的变化事件
+               document.getElementById('file-input').addEventListener('change', function(event) {
+                   const file = event.target.files[0]; // 获取选中的文件
+                   if (!file) {
+                       return; // 如果没有文件，直接返回
+                   }
+       
+                   const reader = new FileReader(); // 创建FileReader对象
+                   reader.onload = function(event) {
+                       try {
+                           const data = new Uint8Array(event.target.result); // 读取文件内容
+                           const workbook = XLSX.read(data, { type: 'array' }); // 使用xlsx库解析Excel文件
+                           const sheetName = workbook.SheetNames[0]; // 获取第一个工作表的名字
+                           const sheet = workbook.Sheets[sheetName]; // 获取第一个工作表
+                           const rowData = XLSX.utils.sheet_to_json(sheet, { header: 1 }); // 将工作表转换为JSON格式
+       
+                           // 假设数据在第一行
+                           const dataRow = rowData[1] || []; // 获取第二行的数据，因为第一行是标题
+       
+                           // 将数据填充到HTML元素中
+                           document.getElementById('confirmation-code').textContent = dataRow[0] || '未提供';
+                           document.getElementById('hotel-name').textContent = dataRow[1] || '未提供';
+                           document.getElementById('hotel-address').textContent = dataRow[2] || '未提供';
+                           document.getElementById('hotel-phone').textContent = dataRow[3] || '未提供';
+                           document.getElementById('checkin-date').textContent = formatDate(dataRow[4]) || '未提供';
+                           document.getElementById('checkout-date').textContent = formatDate(dataRow[5]) || '未提供';
+                           document.getElementById('room-count').textContent = dataRow[6] || '未提供';
+                           document.getElementById('room-type').textContent = dataRow[7] || '未提供';
+                           document.getElementById('guest-name').textContent = dataRow[8] || '未提供';
+                           document.getElementById('guest-count').textContent = dataRow[9] || '未提供';
+                           document.getElementById('meal-plan').textContent = dataRow[10] || '未提供';
+						   document.getElementById('notice-content').textContent = dataRow[11] || '未提供';
+						   
+                       } catch (error) {
+                           console.error('处理Excel文件时出错:', error);
+                       }
+                   };
+                   reader.readAsArrayBuffer(file); // 读取文件为ArrayBuffer
+               });
+           </script>
+       </body>
+       </html>

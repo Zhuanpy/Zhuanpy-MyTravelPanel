@@ -31,7 +31,6 @@ class FlightData:
             air_code = flight[:2]
             flight_num = flight[2:]
             id_ = air_code + flight_num
-
             conn = pymysql.connect(**cls.db_config)
             cursor = conn.cursor()
 

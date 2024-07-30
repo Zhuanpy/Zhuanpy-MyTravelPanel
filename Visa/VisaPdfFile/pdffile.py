@@ -64,7 +64,6 @@ class MyPdfFile:
 
 
 if __name__ == "__main__":
-
     file_path = """ E:\WORKING\A-AIR_TICKET\HID159187_GAO YICHEN\Datebirth """
 
     pdf = MyPdfFile(file_path)
