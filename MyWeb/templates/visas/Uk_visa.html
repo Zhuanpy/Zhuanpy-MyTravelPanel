@@ -5,16 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>英国签证处理</title>
-    
-	<style>
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 40vh; /* 使内容在垂直方向上居中 */
-            flex-direction: column; /* 使内容在水平方向上居中 */
-        }
-    </style>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/visa_style.css') }}">
+	
 </head>
 
 <body>
@@ -27,7 +19,6 @@
 			<input type="text" id="path_create_project" name="path_create_project" placeholder="如：HID123_LI JIAN">
 			<br>
 			<br>
-			<label for="path_create_project"> 创建项目： </label>
 			<button type="submit" name="submit_button" value="create_project">确认创建</button>
 		</form>
 		<br>

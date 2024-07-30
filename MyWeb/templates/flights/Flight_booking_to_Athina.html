@@ -4,58 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>航班信息输入</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0 250px; /* 为网页两端预留250像素边距 */
-        }
-        .input-group {
-            margin-bottom: 10px;
-        }
-        .input-group input {
-            margin-right: 10px;
-        }
-
-        textarea {
-            width: calc(100% - 20px); /* 确保textarea不会超出边距 */
-            height: 150px;
-            margin-top: 20px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body>
-    <h2>航班信息输入</h2>
-    <div id="inputContainer">
-        <div class="input-group">
-            <label>航班号：<input type="text" class="flightNumber" placeholder="例如 TR 898"></label>
-            <label>日期：<input type="text" class="flightDate" placeholder="例如 01JUN"></label>
-            <button onclick="removeInput(this)">删除</button>
+<body class="font-sans bg-gray-100 p-6">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-center text-2xl font-bold mb-6">生成ATHINA 机票订单代码</h1>
+        <h2 class="text-xl font-semibold mb-4">航班信息输入</h2>
+        <div id="inputContainer" class="space-y-4">
+            <div class="flex items-center space-x-4 mb-4">
+                <label class="flex-1">
+                    日期：
+                    <input type="text" class="flightDate w-full border rounded p-2" placeholder="例如 01JUN">
+                </label>
+                <label class="flex-1">
+                    航班号：
+                    <input type="text" class="flightNumber w-full border rounded p-2" placeholder="例如 TR 898">
+                </label>
+                <button onclick="removeInput(this)" class="bg-red-500 text-white rounded p-2">删除</button>
+            </div>
+        </div>
+
+        <button onclick="addInput()" class="bg-blue-500 text-white rounded p-2 mb-6">增加输入</button>
+
+        <h2 class="text-xl font-semibold mb-4">行程输出</h2>
+        <textarea id="itinerary" class="w-full border rounded p-2 h-40 resize-none" readonly></textarea>
+        
+        <div class="flex justify-between mt-6">
+            <button onclick="sendData()" class="bg-green-500 text-white rounded p-2">输出行程</button>
+            <a href="{{ url_for('flight_routes.entry_flight_page') }}" class="flex items-center">
+                <button class="bg-gray-500 text-white rounded p-2">
+                    录入航班
+                </button>
+            </a>
         </div>
     </div>
-    
-	<button onclick="addInput()">增加输入</button>
-
-    <h2>行程信息</h2>
-    <textarea id="itinerary" readonly></textarea>
-    <br /><br />
-    <button onclick="sendData()">输出行程</button>
-
-    <a href="{{url_for('flight_routes.entry_flight_page') }}"><button > 录入航班信息 </button></a>
-    
 
     <script>
-
         function addInput() {
             const container = document.getElementById('inputContainer');
             const inputGroup = document.createElement('div');
-            inputGroup.className = 'input-group';
+            inputGroup.className = 'flex items-center space-x-4 mb-4';
             inputGroup.innerHTML = `
-                <label>航班号：<input type="text" class="flightNumber" placeholder="例如 TR 898"></label>
-                <label>日期：<input type="text" class="flightDate" placeholder="例如 01JUN"></label>
-                <button onclick="removeInput(this)">删除</button>
+                <label class="flex-1">
+                    日期：
+                    <input type="text" class="flightDate w-full border rounded p-2" placeholder="例如 01JUN">
+                </label>
+                <label class="flex-1">
+                    航班号：
+                    <input type="text" class="flightNumber w-full border rounded p-2" placeholder="例如 TR 898">
+                </label>
+                <button onclick="removeInput(this)" class="bg-red-500 text-white rounded p-2">删除</button>
             `;
             container.appendChild(inputGroup);
         }
@@ -64,7 +63,7 @@
             const inputGroup = button.parentElement;
             inputGroup.remove();
         }
-
+		
         function sendData() {
             const flightNumbers = document.querySelectorAll('.flightNumber');
             const flightDates = document.querySelectorAll('.flightDate');
@@ -92,6 +91,7 @@
             })
             .catch(error => console.error('Error:', error));
         }
-    </script>
+    
+	</script>
 </body>
 </html>

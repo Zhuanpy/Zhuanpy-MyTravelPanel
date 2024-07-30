@@ -48,6 +48,7 @@ def flight_to_athina_page_process():
     for entry in data:
         flight_number = entry.get('flightNumber', '未知航班号')
         flight_date = entry.get('flightDate', '未知日期')
+
         r = flight.athina_booking_code(num, flight_number, flight_date)
         itinerary += f"{r}\n"
         num += 1
@@ -80,21 +81,37 @@ def entry_flight_page():
     return render_template('flights/flight_timing_entry.html')
 
 
-@fb.route('/entryFlightSubmit', methods=['POST'])
+@fb.route('/entry_flight_processing', methods=['POST'])
 def entry_flight_processing():
-    air_number = request.form['flight_number']
-    air_number = air_number.replace(' ', '')
-    airline = air_number[:2]
-    flight_number = air_number[2:]
+    flight_numbers = request.form.getlist('flightNumber[]')
+    flight_numbers = [item for item in flight_numbers if item != '']
 
-    origin = request.form['origin']
-    departure_time = request.form['departure_time']
-    flight.insert_flight(airline, flight_number, origin, departure_time)
+    origins = request.form.getlist('origin[]')
+    origins = [item for item in origins if item != '']
 
-    return '新记录插入成功'
+    departure_times = request.form.getlist('departureTime[]')
+    departure_times = [item for item in departure_times if item != '']
+
+    if not flight_numbers or not origins or not departure_times:
+        return '<div style="text-align: center;">数据插入失败，未输入航班数据</div>'
+
+    flights = [
+        {"flightNumber": flight_number, "origin": origin, "departureTime": departure_time}
+        for flight_number, origin, departure_time in zip(flight_numbers, origins, departure_times)
+    ]
+
+    for f in flights:
+        air_number = f['flightNumber']
+        origin = f['origin']
+        departure_time = f['departureTime']
+
+        air_number = air_number.replace(' ', '')
+        airline = air_number[:2]
+        flight_number = air_number[2:]
+        flight.insert_flight(airline, flight_number, origin, departure_time)
+
+    return '<div style="text-align: center;">新记录插入成功</div>'
 
 
 if __name__ == '__main__':
     pass
-
-

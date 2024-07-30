@@ -5,96 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>韩国签证处理</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #f0f4f8;
-            color: #333;
-        }
-
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* height: 100vh; /* 使内容在垂直方向上居中 */ */
-			/* position: relative; */
-			top: 100px;
-            flex-direction: column; /* 使内容在水平方向上居中 */
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 500px;
-            margin: auto;
-        }
-
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        form {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        label {
-            font-size: 16px;
-            color: #34495e;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        button {
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border: 1px solid #2c3e50;
-            background-color: #2c3e50;
-            color: #ffffff;
-            transition: background-color 0.3s, border-color 0.3s;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        button:hover {
-            background-color: #34495e;
-            border-color: #34495e;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/visa_style.css') }}">
 </head>
 
 <body>
     <div class="center">
         <h1>韩国签证处理</h1>
-
-        <form method="post" action="{{url_for('visa_routes.visa_Korea_processing')}}">
-            <label for="path_create_project">项目名称：</label>
-            <input type="text" id="path_create_project" name="path_create_project" placeholder="如：HID123_LI JIAN">
-            <label for="submit_button_create">创建项目：</label>
-            <button id="submit_button_create" type="submit" name="submit_button" value="create_project">确认创建</button>
+        
+        {% set forms = [
+            {'label_for': 'path_create_project', 'label_text': '项目名称：', 'input_id': 'path_create_project', 'input_name': 'path_create_project', 'input_placeholder': '如：HID123_LI JIAN', 'button_id': 'submit_button_create', 'button_value': 'create_project', 'button_text': '确认创建'},
+            {'label_for': 'path_fill_form', 'label_text': '文件路径：', 'input_id': 'path_fill_form', 'input_name': 'path_fill_form', 'input_placeholder': '如：HID123_LI JIAN', 'button_id': 'submit_button_fill', 'button_value': 'fill_form', 'button_text': '确认生成'}
+        ] %}
+        
+        {% for form in forms %}
+        <form method="post" action="{{ url_for('visa_routes.visa_Korea_processing') }}">
+            <label for="{{ form.label_for }}">{{ form.label_text }}</label>
+            <input type="text" id="{{ form.input_id }}" name="{{ form.input_name }}" placeholder="{{ form.input_placeholder }}">
+            <button id="{{ form.button_id }}" type="submit" name="submit_button" value="{{ form.button_value }}">{{ form.button_text }}</button>
         </form>
-
-        <form method="post" action="{{url_for('visa_routes.visa_Korea_processing')}}">
-            <label for="path_fill_form">文件路径：</label>
-            <input type="text" id="path_fill_form" name="path_fill_form" placeholder="如：HID123_LI JIAN">
-            <label for="submit_button_fill">生成表格：</label>
-            <button id="submit_button_fill" type="submit" name="submit_button" value="fill_form">确认生成</button>
-        </form>
+        {% endfor %}
     </div>
 </body>
 </html>
