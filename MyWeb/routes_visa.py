@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request
 from Visa.Korea.KoreavisaFun import KoreaVisa
 from Filefloder import CreateVisaFolder as cvf
 
+
 # 创建蓝图
 bp = Blueprint('visa_routes', __name__)
 
@@ -149,4 +150,16 @@ def visa_NewZealand():
 def visa_NewZealand_processing():
     file_name = request.form.get("path_create_project")
     cvf.NewZealand_folder(file_name)
+    return render_template('visas/result.html')
+
+
+@bp.route('/visaSchengen', methods=['GET', 'POST'])
+def visa_Schengen():
+    return render_template('visas/Schengen_visa.html')
+
+
+@bp.route('/visaSchengenProcesseing', methods=['GET', 'POST'])
+def visa_Schengen_processing():
+    file_name = request.form.get("path_create_project")
+    cvf.Schengen_folder(file_name)
     return render_template('visas/result.html')

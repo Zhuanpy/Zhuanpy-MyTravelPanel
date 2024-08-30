@@ -2,12 +2,13 @@ from flask import Flask, render_template, request
 from routes_visa import bp as visa_routes
 from route_flight import fb as flight_routes
 from routes_files import fpb as files_routes
-
+from routes_statement import sb as statement_routes
 app = Flask(__name__)
 
 app.register_blueprint(visa_routes)
 app.register_blueprint(flight_routes)
 app.register_blueprint(files_routes)
+app.register_blueprint(statement_routes)
 
 
 @app.route('/')
@@ -33,6 +34,11 @@ def accommodation():
 @app.route('/file_processing', methods=['GET', 'POST'])
 def file_processing():
     return render_template('files/pdf.html')
+
+
+@app.route('/statement_uob_processing')
+def statement_uob():
+    return render_template("statement/UobBank.html")
 
 
 @app.route('/my_test')

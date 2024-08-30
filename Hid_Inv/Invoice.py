@@ -9,7 +9,7 @@ class CountHid:
 
     def __init__(self):
 
-        self._path = "E:/WORKING/B-账单/BOOKING"
+        self._path = r"E:/WORKING/B-账单/BOOKING"
 
     def read_all_inv(self, complete_month=0):
         path = os.path.join(self._path, 'Invoice')
@@ -77,7 +77,16 @@ class CountHid:
 
         return datas
 
+    def read_disputed(self):
+        disputed_file_path = os.path.join(self._path, 'disputed.txt')
+        # 使用 with 语句确保文件正确关闭
+        with open(disputed_file_path, 'r') as file:
+            data = pd.read_csv(file, header=None, squeeze=True)
+        li = data.values
+        return li
+
     def find_no_inv_booking(self, pre_month='2023-05'):
+
         complete_path = os.path.join(self._path, 'complete.txt')
 
         with open(complete_path, 'r') as cm_file:
@@ -87,7 +96,7 @@ class CountHid:
         inv = self.read_all_inv(complete_month)
         hid = self.read_all_hid(complete_month)
 
-        #  清除盈利为 0，不正常订单
+        #  清除不正常订单, 盈利为 0;
         hid = hid[~hid[0].isin(list(inv[0]))]
         hid = hid[hid[7] != 0]
 
@@ -111,20 +120,12 @@ class CountHid:
 
         return profits, pre_sum
 
-    def read_disputed(self):
-        disputed_file_path = os.path.join(self._path, 'disputed.txt')
-        # 使用 with 语句确保文件正确关闭
-        with open(disputed_file_path, 'r') as file:
-            data = pd.read_csv(file, header=None, squeeze=True)
-        li = data.values
-        return li
-
 
 class CountMonth:
 
     def __init__(self, start_month=202304, end_month=202307):
 
-        self._path = 'E:/WORKING/B-账单/BOOKING'
+        self._path = r'E:/WORKING/B-账单/BOOKING'
         self.start_month = start_month
         self.end_month = end_month
 
@@ -174,11 +175,6 @@ class CountMonth:
 
 
 if __name__ == '__main__':
-    pre = '2023-11'
     count = CountHid()
-    profit, _sum = count.find_no_inv_booking(pre)
+    profit, _sum = count.find_no_inv_booking()
     print(f'profit: {profit}, pre sum: {_sum}')
-
-    # count = CountMonth()
-    # data = count.import_my_performance()
-    # print(data)

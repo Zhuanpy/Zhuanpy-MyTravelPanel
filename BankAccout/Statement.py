@@ -249,7 +249,7 @@ class OriginalStatement:
         statement.to_excel(path, index=False, engine='openpyxl')
         logging.warning("To boss账单已更新;")
 
-    def statement_process(self):
+    def statement_process(self) -> None:
 
         self.organized_statement_data()  # 原始账单整理
 

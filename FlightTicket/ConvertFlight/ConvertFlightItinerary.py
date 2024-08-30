@@ -52,6 +52,7 @@ def transfer2airport(code3: str):
 
 
 def organize_text(texts):
+
     """
     # text：
     #  1. MU  568 S  05AUG SINPVG HK1  1635   2205  O*       E SA  1
