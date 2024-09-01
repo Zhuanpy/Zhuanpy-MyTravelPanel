@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UOB账单处理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .section p {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        button {
+            display: block;
+            width: auto;
+            max-width: 100%;
+            padding: 10px 20px;
+            margin: 5px 0;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* 绿色背景 */
+            color: #fff;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+        button:hover {
+            background-color: #45a049; /* 更深的绿色 */
+        }
+        button:active {
+            background-color: #388e3c; /* 更深的绿色 */
+        }
+    </style>
+    <script>
+        function handleClick(task) {
+            alert('处理: ' + task);
+        }
+    </script>
+</head>
+<body>
+    <h1>UOB账单处理</h1>
+
+    <div class="section">
+        <p>完整进程</p>
+        <a href="{{url_for('statement_routes.uob_bank_processing')}}">账单整理</a>
+    </div>
+
+    <div class="section">
+        <p>单项进程</p>
+        <a href="{{url_for('statement_routes.uob_original_processing')}}">原始账单整理</a> <br> <br>
+		<a href="{{url_for('statement_routes.latest_company_statement')}}">公司账单整理</a> <br> <br>
+		<a href="{{url_for('statement_routes.latest_self_statement')}}">Personal Statement</a> <br> <br>
+		<a href="{{url_for('statement_routes.uob_original_processing')}}">Company Statement</a> <br> <br>
+		<a href="{{url_for('statement_routes.statement_to_company')}}">Final Company Statement</a> <br> <br>
+		
+    </div>
+</body>
+</html>

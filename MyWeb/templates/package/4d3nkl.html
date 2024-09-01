@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吉隆坡 & 文东 4天3夜经典游</title>
+    
+    <style>
+        /* Screen styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            box-sizing: border-box;
+            height: 100vh;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .header {
+            background-color: #00796b;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 2em;
+            border-radius: 8px;
+        }
+
+        .banner {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .price-badge {
+            background-color: #ff9800;
+            color: white;
+            font-size: 1.5em;
+            padding: 10px 20px;
+            position: relative;
+            top: -50px;
+            left: -20px;
+            border-radius: 5px;
+            float: right;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            background-color: #00796b;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .itinerary {
+            margin-bottom: 20px;
+        }
+
+        .itinerary img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .itinerary h3 {
+            color: #00796b;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background-color: #00796b;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* Print styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 20mm;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #ffffff;
+                display: block;
+                box-sizing: border-box;
+                height: auto;
+            }
+
+            .page {
+                width: auto;
+                height: auto;
+                padding: 20px;
+                box-shadow: none; /* Remove box-shadow for print */
+                page-break-after: always;
+                box-sizing: border-box;
+                margin: 0 auto;
+            }
+
+            .header, .footer {
+                background-color: #00796b;
+                color: white;
+                text-align: center;
+                padding: 10px;
+                font-size: 1em;
+                border-radius: 8px;
+                page-break-after: avoid; /* Avoid breaking the header/footer across pages */
+            }
+
+            .price-badge {
+                background-color: #ff9800;
+                color: white;
+                font-size: 1.5em;
+                padding: 10px 20px;
+                border-radius: 5px;
+                float: right;
+                position: static; /* Adjust positioning for print */
+                margin-bottom: 10px; /* Adjust spacing */
+            }
+
+            .section {
+                margin-bottom: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+                background-color: #00796b;
+                color: white;
+                padding: 10px;
+                border-radius: 4px;
+            }
+
+            .itinerary img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+
+            .itinerary h3 {
+                color: #00796b;
+                font-size: 1.2em;
+                margin-bottom: 5px;
+            }
+
+            .footer {
+                font-size: 0.9em;
+                border-radius: 0 0 8px 8px;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+
+            /* Ensure that no extra page breaks are added */
+            .page:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            吉隆坡 & 文东 4天3夜经典游
+        </div>
+        <img src="https://example.com/banner.jpg" alt="旅游景点" class="banner">
+        <div class="price-badge">$899/人</div>
+
+        <div class="section">
+            <div class="section-title">行程亮点</div>
+            <ul>
+                <li>涵盖吉隆坡的主要地标与文东的文化和自然风光。</li>
+                <li>行程安排轻松，适合家庭、情侣和朋友出行。</li>
+                <li>体验多元文化与地道美食。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="section-title">详细行程</div>
+
+        <!-- Day 1 -->
+        <div class="itinerary">
+            <h3>第一天：吉隆坡1日游</h3>
+            <img src="https://example.com/kuala-lumpur.jpg" alt="吉隆坡景点">
+            <p>上午参观鬼仔巷、独立广场、城市画廊。下午前往中央市场和茨厂街，晚上在双子塔自由活动并入住吉隆坡民宿。</p>
+        </div>
+    </div>
+
+    <div class="page">
+        <!-- Day 2 -->
+        <div class="itinerary">
+            <h3>第二天：吉隆坡 - 云顶高原 - 文东</h3>
+            <img src="https://example.com/genting.jpg" alt="云顶高原">
+            <p>上午参观清水岩洞与云顶名牌城，下午在云顶游乐园体验刺激。晚上入住文东民宿。</p>
+        </div>
+    </div>
+
+    <div class="page">
+        <!-- Day 3 -->
+        <div class="itinerary">
+            <h3>第三天：文东1日游</h3>
+            <img src="https://example.com/bentong.jpg" alt="文东">
+            <p>参观文东文化馆、大象保育园和广福庙。晚上自由活动并入住文东民宿。</p>
+        </div>
+    </div>
+
+    <div class="page">
+        <!-- Day 4 -->
+        <div class="itinerary">
+            <h3>第四天：文东 - 吉隆坡机场送机</h3>
+            <img src="https://example.com/mosque.jpg" alt="布特拉清真寺">
+            <p>午餐后参观布特拉粉红清真寺，随后送机至吉隆坡机场，结束愉快行程。</p>
+        </div>
+        <div class="footer">
+            联系我们 | +6012-3456789 | email@example.com
+        </div>
+    </div>
+</body>
+</html>
