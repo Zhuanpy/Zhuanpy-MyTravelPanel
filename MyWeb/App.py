@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request
-from routes_visa import bp as visa_routes
-from route_flight import fb as flight_routes
-from routes_files import fpb as files_routes
-from routes_statement import sb as statement_routes
+from flask import Flask, render_template
+from code.routes_visa import bp as visa_routes
+from code.route_flight import fb as flight_routes
+from code.routes_files import fpb as files_routes
+from code.routes_statement import sb as statement_routes
+
 app = Flask(__name__)
 
 app.register_blueprint(visa_routes)
