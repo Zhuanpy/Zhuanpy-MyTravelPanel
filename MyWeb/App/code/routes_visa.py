@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
-from Visa.Korea.KoreavisaFun import KoreaVisa
-from Filefloder import CreateVisaFolder as cvf
+from .Visa.Korea.KoreavisaFun import KoreaVisa
+from .Filefloder import CreateVisaFolder as cvf
 
 
 # 创建蓝图

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from BankAccout.Statement import OriginalStatement
+from .BankAccout.Statement import OriginalStatement
 
 # 创建蓝图
 sb = Blueprint('statement_routes', __name__)

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
-from FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
-from utils import FlightData as flight
+from .FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
+from .utils import FlightData as flight
 
 # 创建蓝图
 fb = Blueprint('flight_routes', __name__)

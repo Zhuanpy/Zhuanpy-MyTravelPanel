@@ -1,5 +1,5 @@
 from datetime import datetime
-from flight_utils import MysqlTravelData
+from .flight_utils import MysqlTravelData
 
 
 def convert_date_format(original_date: str):

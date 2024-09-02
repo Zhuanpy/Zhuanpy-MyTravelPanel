@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from Visa.VisaPdfFile.pdffile import MyPdfFile
+from .Visa.VisaPdfFile.pdffile import MyPdfFile
 
 
 # 创建蓝图
