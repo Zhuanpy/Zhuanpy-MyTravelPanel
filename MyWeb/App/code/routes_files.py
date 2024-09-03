@@ -3,10 +3,10 @@ from .Visa.VisaPdfFile.pdffile import MyPdfFile
 
 
 # 创建蓝图
-fpb = Blueprint('files_routes', __name__)
+files_blue = Blueprint('files_routes', __name__)
 
 
-@fpb.route('/pdf_to_pdf', methods=['POST'])
+@files_blue.route('/pdf_to_pdf', methods=['POST'])
 def merge_pdf_to_pdf():
     path = request.form.get('pdfFolderPath')
     # 处理图片并生成PDF
@@ -15,7 +15,7 @@ def merge_pdf_to_pdf():
     return render_template('result.html')
 
 
-@fpb.route('/images_to_pdf', methods=['POST'])
+@files_blue.route('/images_to_pdf', methods=['POST'])
 def merge_images_to_pdf():
     # 获取输入的文件夹路径
     path = request.form.get('imageFolderPath')

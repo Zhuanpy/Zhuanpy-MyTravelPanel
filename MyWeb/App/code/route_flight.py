@@ -1,18 +1,18 @@
 from flask import Blueprint, render_template, request, jsonify
 from .FlightTicket.ConvertFlight.ConvertFlightItinerary import translate_text
-from .utils import FlightData as flight
+from .utils.utils import FlightData as flight
 
 # 创建蓝图
-fb = Blueprint('flight_routes', __name__)
+flight_blue = Blueprint('flight_routes', __name__)
 
 
 # 机票 行程转换
-@fb.route('/conversion')
+@flight_blue.route('/conversion')
 def itinerary_conversion():
     return render_template('flights/conversion.html', output_text="")
 
 
-@fb.route('/convertPage', methods=['POST'])
+@flight_blue.route('/convertPage', methods=['POST'])
 def itinerary_convert_process():
     input_text = request.form['input_text']
     language = request.form['language']
@@ -34,12 +34,12 @@ def itinerary_convert_process():
 
 
 # Athina 机票订单处理
-@fb.route('/athinaPage')
+@flight_blue.route('/athinaPage')
 def flight_to_athina_page():
     return render_template('flights/Flight_booking_to_Athina.html')
 
 
-@fb.route('/process', methods=['POST'])
+@flight_blue.route('/process', methods=['POST'])
 def flight_to_athina_page_process():
     data = request.json
     itinerary = ""
@@ -57,13 +57,13 @@ def flight_to_athina_page_process():
 
 
 # 酷航信息输入
-@fb.route('/scootPage')
+@flight_blue.route('/scootPage')
 def render_scoot_page():
     return render_template('flights/scoot.html', output_text="")
 
 
 # Athina  订单处理
-@fb.route('/athinaPage')
+@flight_blue.route('/athinaPage')
 def render_athina_page():
     return render_template('flights/athina.html')
 
@@ -71,17 +71,17 @@ def render_athina_page():
 """ 航班信息录入"""
 
 
-@fb.route('/enterFlightInformation')
+@flight_blue.route('/enterFlightInformation')
 def enter_flight_information():
     return render_template('flights/enter_flight_information.html')
 
 
-@fb.route('/flightEntryPage')
+@flight_blue.route('/flightEntryPage')
 def entry_flight_page():
     return render_template('flights/flight_timing_entry.html')
 
 
-@fb.route('/entry_flight_processing', methods=['POST'])
+@flight_blue.route('/entry_flight_processing', methods=['POST'])
 def entry_flight_processing():
     flight_numbers = request.form.getlist('flightNumber[]')
     flight_numbers = [item for item in flight_numbers if item != '']
