@@ -123,9 +123,14 @@ class CountHid:
 
 class CountMonth:
 
-    def __init__(self, start_month=202304, end_month=202307, name="Zz"):
+    def __init__(self, start_month=202304, end_month=202307, file_path: str = None, name="Zz", ):
 
-        self._path = f'E:/WORKING/B-账单/BOOKING/{name}'
+        if file_path:
+            self._path = file_path
+
+        else:
+            self._path = f'E:/WORKING/B-账单/BOOKING/{name}'
+
         self.start_month = start_month
         self.end_month = end_month
 
@@ -175,7 +180,8 @@ class CountMonth:
 
 
 if __name__ == '__main__':
-    name = "Ly"
-    count = CountHid(name=name)
+    # name = "Ly"
+    # name = name
+    count = CountHid()
     profit, _sum = count.find_no_inv_booking()
     print(f'profit: {profit}, pre sum: {_sum}')

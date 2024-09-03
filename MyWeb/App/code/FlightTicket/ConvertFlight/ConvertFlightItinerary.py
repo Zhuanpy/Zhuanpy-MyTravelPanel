@@ -38,9 +38,8 @@ def transfer2airport(code3: str):
             sql = f"SELECT * FROM airport_data WHERE 机场三字码 = '{code3}'"
             cursor.execute(sql)
             result = cursor.fetchone()
-            # result = ('北京', 'PEK', 'ZBAA', '北京首都国际机场', 'BEIJING')
             if result:
-                results = (result[0], result[3], result[4])
+                results = (result[1], result[2], result[3])
 
             else:
                 results = None
@@ -149,6 +148,6 @@ def translate_text(texts, language='CN', luggage=None, price=None):
 
 if __name__ == "__main__":
     # # 使用示例
-    SIN = 'YTY'
+    SIN = 'PEK'
     r = transfer2airport(SIN)
     print(r)

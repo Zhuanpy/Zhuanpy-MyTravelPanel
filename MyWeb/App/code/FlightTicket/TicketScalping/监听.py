@@ -1,6 +1,5 @@
 import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import sys
 from email.message import Message
 from pynput import mouse
 import time
@@ -40,8 +39,12 @@ def sent_email(title, content):
 def on_click(x, y, button, pressed):
     title = "computer clicked"
     content = f"computer clicked {x}, {y}"
+    # print(content)
 
     if pressed:
+
+        if x < 5 and y < 5:
+            sys.exit()
         sent_email(title, content)
         time.sleep(15)  # 等待5秒
         return True  # 继续监听

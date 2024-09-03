@@ -36,10 +36,10 @@ class AthinaBooking:
 
 def download_airport_code():
 
-    for i in range(10, 290):
+    for i in range(1, 290):
+
         url = f'https://airportcode.bmcx.com/{i}__airportcode/'
         response = requests.get(url)
-        # if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
         # 找到包含机场信息的表格
         airport_table = soup.find('table')
@@ -49,17 +49,17 @@ def download_airport_code():
 
         # 保存为CSV文件
         airport_df.to_csv('airport_data.csv', mode='a', header=False, index=False)
-        time.sleep(4)
+        print(f"download page to {i}")
+        time.sleep(1)
 
     return True
 
 
-def append_airport_data(city_cn: str, code3: str, code4: str, airport_name_cn: str, airport_name_en: str):
+def append_airport_data(city_cn: str, code3: str, airport_name_cn: str, airport_name_en: str):
     """ 添加新机场数据到数据库
     Args:
         city_cn (str): 中文城市名
         code3 (str): 三字代码
-        code4 (str): 四字代码
         airport_name_cn (str): 中文机场名
         airport_name_en (str): 英文机场名
 
@@ -67,7 +67,7 @@ def append_airport_data(city_cn: str, code3: str, code4: str, airport_name_cn: s
         bool: 插入是否成功
 
     示例用法
-    append_airport_data('北京', 'PEK', 'ZBAA', '北京首都国际机场', 'Beijing Capital International Airport')
+    append_airport_data('北京', 'PEK',  '北京首都国际机场', 'Beijing Capital International Airport')
     """
 
     # 连接数据库
@@ -76,8 +76,8 @@ def append_airport_data(city_cn: str, code3: str, code4: str, airport_name_cn: s
     try:
         with connection.cursor() as cursor:
             # 执行插入
-            sql = "INSERT INTO airport_data (城市名, 机场三字码, 机场四字码, 机场名称, 英文名称) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(sql, (city_cn, code3, code4, airport_name_cn, airport_name_en))
+            sql = "INSERT INTO airport_data (机场三字码, 城市名, 机场名称, 英文名称) VALUES (%s, %s,  %s, %s)"
+            cursor.execute(sql, (city_cn, code3, airport_name_cn, airport_name_en))
 
         # 提交事务
         connection.commit()
@@ -94,9 +94,5 @@ def append_airport_data(city_cn: str, code3: str, code4: str, airport_name_cn: s
 
 
 if __name__ == '__main__':
-    city_cn = "扬州"
-    code3 = "YTY"
-    code4 = "ZSYA"
-    airport_name_cn = "扬泰国际机场"
-    airport_name_en = "Yangzhou Taizhou International Airport"
-    append_airport_data(city_cn, code3, code4, airport_name_cn, airport_name_en)
+    # download_airport_code()
+    pass

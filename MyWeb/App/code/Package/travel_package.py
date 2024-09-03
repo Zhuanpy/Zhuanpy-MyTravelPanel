@@ -25,7 +25,7 @@ def get_file_time_info(file_path):
 
 
 # 示例用法
-file_path = 'E:\WORKING\A-AIR_TICKET/HOTE LIST.xls'
+file_path = r'E:/WORKING/A-AIR_TICKET/HOTE LIST.xls'
 
 time_info = get_file_time_info(file_path)
 
