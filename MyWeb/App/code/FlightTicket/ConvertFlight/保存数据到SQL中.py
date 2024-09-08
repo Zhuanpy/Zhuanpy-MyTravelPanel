@@ -86,7 +86,7 @@ def upsert_flight_data(csv_file, db_url, table_name):
     existing_data = pd.read_sql(existing_data_query, con=engine)
 
     # 筛选出 CSV 文件中不存在于数据库的航班ID
-    new_data = data[~data["航班ID"].isin(existing_data["航班ID"])]
+    new_data = data[~data["航班ID"].isin(existing_data["航班ID"])].dropna(subset=["航班号"])
 
     # 只插入新的航班数据
     if not new_data.empty:
@@ -94,16 +94,20 @@ def upsert_flight_data(csv_file, db_url, table_name):
 
         for index, row in new_data.iterrows():
             # 通过 SQL 实现 upsert 操作
-            upsert_sql = f"""
-            INSERT INTO {table_name} (航班ID, 航司, 航班号, 起始城市, 起始时间)
-            VALUES ('{row["航班ID"]}', '{row["航司"]}', '{row["航班号"]}', '{row["起始城市"]}', '{row["起始时间"]}')
-            ON DUPLICATE KEY UPDATE 
-            航司=VALUES(航司), 
-            航班号=VALUES(航班号), 
-            起始城市=VALUES(起始城市), 
-            起始时间=VALUES(起始时间)
-            """
-            connection.execute(upsert_sql)
+            try:
+                upsert_sql = f"""
+                INSERT INTO {table_name} (航班ID, 航司, 航班号, 起始城市, 起始时间)
+                VALUES ('{row["航班ID"]}', '{row["航司"]}', '{row["航班号"]}', '{row["起始城市"]}', '{row["起始时间"]}')
+                ON DUPLICATE KEY UPDATE 
+                航司=VALUES(航司), 
+                航班号=VALUES(航班号), 
+                起始城市=VALUES(起始城市), 
+                起始时间=VALUES(起始时间)
+                """
+                connection.execute(upsert_sql)
+
+            except Exception as e:
+                print(f"在插入{row}或更新数据时发生错误: {e}")
 
         connection.close()
         print(f"数据已成功 upsert 到表 {table_name}")

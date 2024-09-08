@@ -1,26 +1,14 @@
 from .exts import db
 
 
-class User(db.Model):
-    # 表名
-    __tablename__ = 'db_user'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(255), unique=True, index=True)
-    age = db.Column(db.Integer, nullable=False)
-    sex = db.Column(db.Boolean, default=True)
-    salary = db.Column(db.Float, default=1000, nullable=False)
-    # 定义 columns
-
-
 class AirportData(db.Model):
     # 表名
     __tablename__ = 'airport_data'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    city_name = db.Column(db.String(255), unique=True, index=True)
-    airport_code_3 = db.Column(db.String(20), unique=True, index=True)
-    airport_code_4 = db.Column(db.String(20), unique=True, index=True)
-    airport_name_cn = db.Column(db.String(255), unique=True, index=True)
-    airport_name_en = db.Column(db.String(255), unique=True, index=True)
+    airport_IATA = db.Column(db.String(3), unique=True, index=True)  # IATA 代码一般为3个字符
+    city_name = db.Column(db.String(100), index=True)  # 假设城市名不会超过100个字符
+    airport_name_cn = db.Column(db.String(100))  # 假设中文机场名称不会超过100个字符
+    airport_name_en = db.Column(db.String(100))  # 假设英文机场名称不会超过100个字符
 
 
 # flight schedule
@@ -28,12 +16,12 @@ class FlightSchedule(db.Model):
     # 表名
     __tablename__ = 'flight_schedule'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    flight_number = db.Column(db.String(255), unique=True, index=True)
-    start_city = db.Column(db.String(20), unique=True, index=True)
-    end_city = db.Column(db.String(20), unique=True, index=True)
+    flight_number = db.Column(db.String(10), unique=True, index=True)
+    airline_code = db.Column(db.String(10))
+    airline_num = db.Column(db.String(10))
 
-    start_timing = db.Column(db.String(20), unique=True, index=True)
-    end_timing = db.Column(db.String(20), unique=True, index=True)
+    schedule_city = db.Column(db.String(20))
+    schedule_timing = db.Column(db.String(15))
 
 
 # 供应商数据表: supplier_data_table
@@ -75,11 +63,69 @@ class SupplierData(db.Model):
 class TourProductData(db.Model):
     # 表名
     __tablename__ = 'tour_product_data'
+
+    # 主键 ID
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    # 产品名称
+    name = db.Column(db.String(100), nullable=False)
+
+    # 产品描述
+    description = db.Column(db.Text, nullable=False)
+
+    # 目的地
+    destination = db.Column(db.String(100), nullable=False)
+
+    # 出发日期
+    departure_date = db.Column(db.Date, nullable=False)
+
+    # 返回日期
+    return_date = db.Column(db.Date, nullable=False)
+
+    # 产品价格
+    price = db.Column(db.Float, nullable=False)
+
+    # 可用座位数
+    available_seats = db.Column(db.Integer, nullable=False)
+
+    # 创建时间
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    # 更新时间
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<TourProductData {self.name}>'
 
 
 # 系统账号数据表: system_account_data_table
 class SystemAccountData(db.Model):
     # 表名
     __tablename__ = 'system_account_data'
+
+    # 主键 ID
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    # 用户名
+    username = db.Column(db.String(50), unique=True, nullable=False)
+
+    # 密码（建议存储加密后的密码）
+    password_hash = db.Column(db.String(128), nullable=False)
+
+    # 电子邮件
+    email = db.Column(db.String(100), unique=True, nullable=False)
+
+    # 用户角色（如管理员、普通用户等）
+    role = db.Column(db.String(20), nullable=False)
+
+    # 账号状态（如激活、禁用等）
+    status = db.Column(db.String(20), nullable=False, default='active')
+
+    # 创建时间
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    # 更新时间
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<SystemAccountData {self.username}>'

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from .code.BankAccout.Statement import OriginalStatement
-
+from .models import *
 # 创建蓝图
 statement_blue = Blueprint('statement_routes', __name__)
 

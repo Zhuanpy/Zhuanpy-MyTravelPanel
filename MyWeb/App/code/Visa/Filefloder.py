@@ -118,3 +118,7 @@ class CreateVisaFolder:
     @classmethod
     def Schengen_folder(cls, name: str):
         return cls.create_folder('Schengen', name)
+
+    @classmethod
+    def Vietnam_folder(cls, name: str):
+        return cls.create_folder('Vietnam', name)

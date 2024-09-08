@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
 from .code.Visa.VisaPdfFile.pdffile import MyPdfFile
+from .models import *
 
 # 创建蓝图
 files_blue = Blueprint('files_routes', __name__)

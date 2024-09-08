@@ -142,15 +142,15 @@ def main(api_key, input_file, output_file):
     # 选择必要的列并重置索引
     filtered_data = filtered_data[["route", "Departure Airport", "Arrival Airport", "Combined"]].reset_index(drop=True)
     filtered_data = filtered_data.drop_duplicates(subset="Combined")
-
+    print(filtered_data)
+    # exit()
     # 调用数据下载和存储函数
     download_and_store_flights(api_key, filtered_data, output_file)
 
 
 # 调用主函数
 if __name__ == "__main__":
-    API_KEY = '59b853061ebdd3e0ca4adda224f537f3'
+    API_KEY = '11616410fa3787c227f606509ad76108'
     INPUT_FILE = 'route_data.csv'  # 需要下载的机场数据
     OUTPUT_FILE = 'flight_timing.csv'  # 存储航班信息的文件
-
     main(API_KEY, INPUT_FILE, OUTPUT_FILE)
